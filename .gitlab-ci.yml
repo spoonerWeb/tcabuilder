@@ -7,7 +7,7 @@ stages:
   only:
     - tags
   before_script:
-    - docker-php-ext-install soap
+    - docker-php-ext-install xml soap
     - composer global require namelesscoder/typo3-repository-client
   script:
     - >
