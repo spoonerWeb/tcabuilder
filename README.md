@@ -32,7 +32,7 @@ $tcaBuilder
     ->addDiv('Extra')
     ->addPalette('access')
     ->addPalette('hidden', 'after:bodytext', 'Alternative label')
-    ->saveToTCA(); // save to TCA
+    ->saveToTca(); // save to TCA
 ```
 
 ### Change existing configurations
