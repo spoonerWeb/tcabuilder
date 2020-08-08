@@ -24,11 +24,14 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected $fields = [];
 
+    protected $customOverrides = [];
+
     public function reset()
     {
         $this->table = '';
         $this->selectedType = '';
         $this->fields = [];
+        $this->customOverrides = [];
     }
 
     public function setTable(string $table)
@@ -111,11 +114,17 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->removeStringInList($allDivs[$position]);
     }
 
+    public function addCustomOverride(string $fieldName, array $override): ConcreteBuilder
+    {
+        $this->customOverrides[$fieldName] = $override;
+    }
+
     public function load(): ConcreteBuilder
     {
         $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
 
         $this->fields = GeneralUtility::trimExplode(',', $fields);
+        $this->customOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'];
     }
 
     public function save()
@@ -125,7 +134,10 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         $GLOBALS['TCA'][$this->table]['types'][$this->selectedType] = [
-            'showitem' => implode(',', $this->fields)
+            'showitem' => implode(',', $this->fields),
+            'customOverrides' => [
+                $this->customOverrides
+            ]
         ];
     }
 
