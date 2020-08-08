@@ -116,8 +116,6 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
 
         $this->fields = GeneralUtility::trimExplode(',', $fields);
-
-        return $this;
     }
 
     public function save()
