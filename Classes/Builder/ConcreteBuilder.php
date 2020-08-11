@@ -84,10 +84,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function removePalette(string $paletteName)
     {
+        $this->removeStringInList($this->getPaletteFieldName($paletteName));
+    }
+
+    public function getPaletteFieldName(string $paletteName): string
+    {
         $allPalettes = array_filter($this->fields, [$this, 'beginsWithPalette']);
         foreach ($allPalettes as $palette) {
             if (strpos($palette, $paletteName) > 0) {
-                $this->removeStringInList($palette);
+                return $palette;
             }
         }
     }
@@ -104,27 +109,37 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function removeDivByLabel(string $label)
     {
-        $divName = '--div--;' . $label;
-        $this->removeStringInList($divName);
+        $this->removeStringInList($this->getDivByLabel($label));
     }
 
     public function removeDivByPosition(int $position)
     {
-        $allDivs = array_values(array_filter($this->fields, [$this, 'beginsWithDiv']));
-        $this->removeStringInList($allDivs[$position]);
+        $this->removeStringInList($this->getDivByPosition($position));
     }
 
-    public function addCustomOverride(string $fieldName, array $override): ConcreteBuilder
+    public function getDivByPosition(int $position): string
+    {
+        $allDivs = array_values(array_filter($this->fields, [$this, 'beginsWithDiv']));
+
+        return $allDivs[$position];
+    }
+
+    public function getDivByLabel(string $label): string
+    {
+        return '--div--;' . $label;
+    }
+
+    public function addCustomOverride(string $fieldName, array $override)
     {
         $this->customOverrides[$fieldName] = $override;
     }
 
-    public function load(): ConcreteBuilder
+    public function load()
     {
         $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
 
         $this->fields = GeneralUtility::trimExplode(',', $fields);
-        $this->customOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'];
+        $this->customOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'] ?? null;
     }
 
     public function save()
@@ -133,12 +148,13 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             return;
         }
 
-        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType] = [
-            'showitem' => implode(',', $this->fields),
-            'customOverrides' => [
-                $this->customOverrides
-            ]
-        ];
+        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = implode(',', $this->fields);
+
+        if ($this->customOverrides) {
+            $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'] = $this->customOverrides;
+        }
+
+        $this->reset();
     }
 
     protected function addFieldToPosition(string $fieldName, string $position)
@@ -169,17 +185,17 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->resetFieldKeys();
     }
 
-    protected function beginsWithDiv($value)
+    protected function beginsWithDiv($value): bool
     {
         return $this->beginsWith($value, '--div--;');
     }
 
-    protected function beginsWithPalette($value)
+    protected function beginsWithPalette($value): bool
     {
         return $this->beginsWith($value, '--palette--;');
     }
 
-    protected function beginsWith($value, string $begin)
+    protected function beginsWith($value, string $begin): bool
     {
         return strpos($value, $begin) === 0;
     }

@@ -96,6 +96,20 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param string $fieldName
+     * @param string $newPosition
+     * @param string $newLabel
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
+    {
+        $this->tcaBuilder->removeField($fieldName);
+        $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);
+
+        return $this;
+    }
+
+    /**
      * Adds a palette with given name at the end or at specific position
      *
      * @param string $paletteName
@@ -124,6 +138,31 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param string $paletteName
+     * @param string $newPosition
+     * @param string $newLabel
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function movePalette(string $paletteName, string $newPosition, string $newLabel = ''): TcaBuilder
+    {
+        $this->tcaBuilder->removePalette($paletteName);
+        $this->tcaBuilder->addPalette($paletteName, $newPosition, $newLabel);
+
+        return $this;
+    }
+
+    /**
+     * Returns full field name of palette
+     *
+     * @param string $paletteName
+     * @return string
+     */
+    public function getPaletteString(string $paletteName): string
+    {
+        return $this->tcaBuilder->getPaletteFieldName($paletteName);
+    }
+
+    /**
      * Adds a div at the end or specific position
      *
      * @param string $divName
@@ -141,18 +180,29 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Removes a div by either position (integer offset) or label
      *
-     * @param $divName
+     * @param $identifier
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder
      */
-    public function removeDiv($divName): TcaBuilder
+    public function removeDiv($identifier): TcaBuilder
     {
-        if (is_int($divName)) {
-            $this->tcaBuilder->removeDivByPosition((int)$divName);
+        if (is_int($identifier)) {
+            $this->tcaBuilder->removeDivByPosition((int)$identifier);
         } else {
-            $this->tcaBuilder->removeDivByLabel($divName);
+            $this->tcaBuilder->removeDivByLabel($identifier);
         }
 
         return $this;
+    }
+
+    public function getDivString($identifier): string
+    {
+        if (is_int($identifier)) {
+            $divString = $this->tcaBuilder->getDivByPosition((int)$identifier);
+        } else {
+            $divString = $this->tcaBuilder->getDivByLabel($identifier);
+        }
+
+        return $divString;
     }
 
     /**
