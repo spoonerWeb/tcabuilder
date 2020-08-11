@@ -80,7 +80,7 @@ $tcaBuilder
 $tcaBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SpoonerWeb\TcaBuilder\TcaBuilder::class);
 $tcaBuilder
     ->setTable('pages') // define table
-    ->setType(3) // define type
+    ->setType(\TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_LINK) // define type
     ->load() // load definitions
     ->removeField('doktype')
     ->removePalette('external')
@@ -92,7 +92,7 @@ $tcaBuilder
 ```php
 $tcaBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SpoonerWeb\TcaBuilder\TcaBuilder::class);
 $tcaBuilder
-    ->loadConfiguration('pages', 7)
+    ->loadConfiguration('pages', \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_MOUNTPOINT)
     ->removeDiv('LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.metadata')
     ->movePalette('title', 'after:' . $tcaBuilder->getPaletteString('abstract'), 'New title')
     ->addOverride(
