@@ -19,7 +19,7 @@ For example:
 
 ### General usage
 
-1. Instantiiate the `TcaBuilder` class
+1. Instantiate the `TcaBuilder` class
 1. Set the table and type to configure (may also be a not existing type yet)
 1. Use the methods to manipulate
 1. Save to the TCA
