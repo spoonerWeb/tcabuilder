@@ -1,7 +1,7 @@
 {
   "name": "spooner-web/tcabuilder",
   "description": "Utility to easily maintain and create your TCA type lists",
-  "type": "typo3-cms-extension",
+  "type": "library",
   "license": "GPL-2.0-or-later",
   "require": {
     "php": "^7.2",
