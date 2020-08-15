@@ -617,7 +617,6 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals([$field => $config], $GLOBALS['TCA']['table']['types']['type']['customOverrides']);
-
     }
 
 }

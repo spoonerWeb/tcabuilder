@@ -1,5 +1,6 @@
 <?php
 namespace SpoonerWeb\TcaBuilder;
+
 /*
  * This file is part of a TYPO3 extension.
  *
