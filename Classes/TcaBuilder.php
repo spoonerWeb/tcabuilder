@@ -216,6 +216,13 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         return $this;
     }
 
+    /**
+     * Gets the complete string defined in types list by
+     * position (int) or label (string)
+     *
+     * @param string|int $identifier
+     * @return string
+     */
     public function getDivString($identifier): string
     {
         if (is_int($identifier)) {
