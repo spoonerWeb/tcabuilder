@@ -7,19 +7,35 @@ stages:
   - test
   - release
 
-"Unit Tests":
+"PHP CS Fixer":
   stage: test
-  image: php:7.2
+  image: ekreative/php-cs-fixer:2
+  script:
+    - php-cs-fixer fix --dry-run --config=.Build/.php_cs --diff
+
+.unit_tests: &unit_tests
+  stage: test
+  image: php:$PHP_VERSION
   before_script:
     - apt-get update && apt-get install -y bash
-    - bash ./docker_install.sh > /dev/null
+    - bash ./.Build/docker_install.sh > /dev/null
     - composer install
   script:
     - ls -l
-    - vendor/bin/phpunit -c ./UnitTests.xml --log-junit build/junit-report.xml --coverage-text --colors=never
+    - vendor/bin/phpunit -c ./.Build/UnitTests.xml --log-junit build/junit-${PHP_VERSION}-report.xml --coverage-text --colors=never
   artifacts:
     reports:
       junit: build/*-report.xml
+
+"Unit Tests with PHP 7.2":
+  <<: *unit_tests
+  variables:
+    PHP_VERSION: '7.2'
+
+"Unit Tests with PHP 7.4":
+  <<: *unit_tests
+  variables:
+    PHP_VERSION: '7.4'
 
 "Upload to TER":
   stage: release

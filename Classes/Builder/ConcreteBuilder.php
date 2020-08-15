@@ -1,5 +1,6 @@
 <?php
 namespace SpoonerWeb\TcaBuilder\Builder;
+
 /*
  * This file is part of a TYPO3 extension.
  *
@@ -17,7 +18,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 {
-
     protected $table = '';
 
     protected $selectedType = '';

@@ -1,5 +1,6 @@
 <?php
 namespace SpoonerWeb\TcaBuilder;
+
 /*
  * This file is part of a TYPO3 extension.
  *
@@ -279,8 +280,6 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Saves the configuration as TCA field list
-     *
-     * @return void
      */
     public function saveToTca()
     {
