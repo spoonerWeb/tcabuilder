@@ -68,6 +68,20 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * Sets a locallang file (beginning with 'EXT:') to be used
+     * whenever using a label (label must begin with 'LANG:')
+     *
+     * @param string $localLangFile
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function useLocalLangFile(string $localLangFile)
+    {
+        $this->tcaBuilder->useLocalLangFile($localLangFile);
+
+        return $this;
+    }
+
+    /**
      * Adds a field to TCA at the end or at specific position
      *
      * @param string $fieldName
@@ -77,7 +91,11 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function addField(string $fieldName, string $position = '', string $altLabel = ''): TcaBuilder
     {
-        $this->tcaBuilder->addField($fieldName, $position, $altLabel);
+        if ($position && !$this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $position)[1])) {
+            $this->tcaBuilder->addField($fieldName, '', $altLabel);
+        } else {
+            $this->tcaBuilder->addField($fieldName, $position, $altLabel);
+        }
 
         return $this;
     }
@@ -103,8 +121,10 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        $this->tcaBuilder->removeField($fieldName);
-        $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);
+        if ($this->tcaBuilder->doesFieldExist($fieldName) && $this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
+            $this->tcaBuilder->removeField($fieldName);
+            $this->tcaBuilder->addField($fieldName, $newPosition, $newLabel);
+        }
 
         return $this;
     }
@@ -145,8 +165,10 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function movePalette(string $paletteName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
-        $this->tcaBuilder->removePalette($paletteName);
-        $this->tcaBuilder->addPalette($paletteName, $newPosition, $newLabel);
+        if ($this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $newPosition)[1])) {
+            $this->tcaBuilder->removePalette($paletteName);
+            $this->tcaBuilder->addPalette($paletteName, $newPosition, $newLabel);
+        }
 
         return $this;
     }
