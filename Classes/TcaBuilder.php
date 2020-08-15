@@ -280,8 +280,6 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Saves the configuration as TCA field list
-     *
-     * @return void
      */
     public function saveToTca()
     {
