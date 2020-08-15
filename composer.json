@@ -7,6 +7,9 @@
     "php": "^7.2",
     "typo3/cms-backend": "^v8.7 || ^9.5 || ^10.4"
   },
+  "require-dev": {
+    "nimut/testing-framework": "^5.1"
+  },
   "autoload": {
     "psr-4": {
       "SpoonerWeb\\TcaBuilder\\": "Classes"

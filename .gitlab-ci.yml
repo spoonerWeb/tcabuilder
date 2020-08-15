@@ -1,5 +1,25 @@
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
 stages:
+  - test
   - release
+
+"Unit Tests":
+  stage: test
+  image: php:7.2
+  before_script:
+    - apt-get update && apt-get install -y bash
+    - bash ./docker_install.sh > /dev/null
+    - composer install
+  script:
+    - ls -l
+    - vendor/bin/phpunit -c ./UnitTests.xml --log-junit build/junit-report.xml --coverage-text --colors=never
+  artifacts:
+    reports:
+      junit: build/*-report.xml
 
 "Upload to TER":
   stage: release

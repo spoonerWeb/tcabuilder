@@ -26,12 +26,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected $customOverrides = [];
 
+    protected $locallangFile = '';
+
     public function reset()
     {
         $this->table = '';
         $this->selectedType = '';
         $this->fields = [];
         $this->customOverrides = [];
+        $this->locallangFile = '';
     }
 
     public function setTable(string $table)
@@ -47,7 +50,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function addField(string $fieldName, string $position = '', string $altLabel = '')
     {
         if ($altLabel) {
-            $fieldName .= ';' . $altLabel;
+            $fieldName .= ';' . $this->getLabel($altLabel);
         }
         if ($position) {
             $this->addFieldToPosition($fieldName, $position);
@@ -69,7 +72,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $paletteNameArray[] = '--palette--';
         if ($altLabel) {
-            $paletteNameArray[] = $altLabel;
+            $paletteNameArray[] = $this->getLabel($altLabel);
         } else {
             $paletteNameArray[] = '';
         }
@@ -95,11 +98,13 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 return $palette;
             }
         }
+
+        return '';
     }
 
     public function addDiv(string $label, string $position = '')
     {
-        $fieldName = '--div--;' . $label;
+        $fieldName = '--div--;' . $this->getLabel($label);
         if ($position) {
             $this->addFieldToPosition($fieldName, $position);
         } else {
@@ -121,12 +126,16 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $allDivs = array_values(array_filter($this->fields, [$this, 'beginsWithDiv']));
 
-        return $allDivs[$position];
+        return $allDivs[$position] ?? '';
     }
 
     public function getDivByLabel(string $label): string
     {
-        return '--div--;' . $label;
+        if (!$this->doesFieldExist('--div--;' . $this->getLabel($label))) {
+            return '';
+        }
+
+        return '--div--;' . $this->getLabel($label);
     }
 
     public function addCustomOverride(string $fieldName, array $override)
@@ -148,13 +157,24 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             return;
         }
 
-        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = implode(',', $this->fields);
+        $fields = array_values(array_filter($this->fields));
+        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
 
         if ($this->customOverrides) {
             $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'] = $this->customOverrides;
         }
 
         $this->reset();
+    }
+
+    public function useLocalLangFile(string $filePath)
+    {
+        $this->locallangFile = $filePath;
+    }
+
+    public function doesFieldExist(string $fieldName)
+    {
+        return array_search($fieldName, $this->fields, true);
     }
 
     protected function addFieldToPosition(string $fieldName, string $position)
@@ -198,5 +218,14 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     protected function beginsWith($value, string $begin): bool
     {
         return strpos($value, $begin) === 0;
+    }
+
+    protected function getLabel(string $label): string
+    {
+        if ($this->locallangFile !== '' && strpos($label, 'LANG:') === 0) {
+            return str_replace('LANG:', 'LLL:' . $this->locallangFile . ':', $label);
+        }
+
+        return $label;
     }
 }
