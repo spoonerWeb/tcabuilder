@@ -22,7 +22,7 @@ stages:
     - composer install
   script:
     - ls -l
-    - vendor/bin/phpunit -c ./.Build/UnitTests.xml --log-junit build/junit-report.xml --coverage-text --colors=never
+    - vendor/bin/phpunit -c ./.Build/UnitTests.xml --log-junit build/junit-{$PHP_VERSION}-report.xml --coverage-text --colors=never
   artifacts:
     reports:
       junit: build/*-report.xml
