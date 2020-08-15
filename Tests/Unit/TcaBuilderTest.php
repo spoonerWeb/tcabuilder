@@ -164,7 +164,6 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newSecondField')
             ->saveToTca();
 
-
         self::assertEquals('newField,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
     }
 
