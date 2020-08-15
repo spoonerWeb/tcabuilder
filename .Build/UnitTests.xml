@@ -15,12 +15,12 @@
 >
     <testsuites>
         <testsuite name="Base tests">
-            <directory>./Tests/Unit</directory>
+            <directory>../Tests/Unit</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./Classes/</directory>
+            <directory suffix=".php">../Classes/</directory>
         </whitelist>
     </filter>
 </phpunit>
