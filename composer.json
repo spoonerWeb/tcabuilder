@@ -1,14 +1,32 @@
 {
   "name": "spooner-web/tcabuilder",
-  "description": "Utility to easily maintain and create your TCA type lists",
+  "description": "Utility to easily maintain and create your TCA forms",
   "type": "library",
   "license": "GPL-2.0-or-later",
   "require": {
     "php": "^7.2",
-    "typo3/cms-backend": "^v8.7 || ^9.5 || ^10.4"
+    "typo3/cms-backend": "^v8.7 || ^9.5 || ^10.4",
+    "typo3/cms-core": "^v8.7 || ^9.5 || ^10.4"
   },
+  "authors": [
+    {
+      "name": "Thomas Löffler",
+      "role": "Developer",
+      "email": "loeffler@spooner-web.de",
+      "homepage": "https://spooner-web.de"
+    }
+  ],
+  "support": {
+    "issues": "https://git.spooner.io/spooner-web/tcabuilder/issues",
+  },
+  "funding": [
+    {
+      "type": "other",
+      "url": "https://paypal.me/Tomalo"
+    }
+  ],
   "require-dev": {
-    "nimut/testing-framework": "^5.1"
+    "nimut/testing-framework": "^4.2 || ^5.1"
   },
   "autoload": {
     "psr-4": {
