@@ -3,7 +3,7 @@
 $EM_CONF['tcabuilder'] = [
     'title' => 'TCA Builder - create and change TCA in an easy way',
     'description' => 'Utility to easily maintain and create your TCA forms',
-    'version' => '1.1.1',
+    'version' => '1.1.2',
     'category' => 'misc',
     'state' => 'beta',
     'author' => 'Thomas Löffler',
