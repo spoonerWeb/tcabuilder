@@ -88,14 +88,15 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * @param string $fieldName
      * @param string $position
      * @param string $altLabel
+     * @param array $columnsOverrides
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder
      */
-    public function addField(string $fieldName, string $position = '', string $altLabel = ''): TcaBuilder
+    public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = []): TcaBuilder
     {
         if ($position && !$this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $position)[1])) {
-            $this->tcaBuilder->addField($fieldName, '', $altLabel);
+            $this->tcaBuilder->addField($fieldName, '', $altLabel, $columnsOverrides);
         } else {
-            $this->tcaBuilder->addField($fieldName, $position, $altLabel);
+            $this->tcaBuilder->addField($fieldName, $position, $altLabel, $columnsOverrides);
         }
 
         return $this;

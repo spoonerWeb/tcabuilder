@@ -157,6 +157,20 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function addFieldWithStringAndColumnsOverridesReturnsConfigurationOfFieldAndColumnsOverrides()
+    {
+        $overridesConfiguration = ['config' => ['type' => 'input']];
+        $this->tcaBuilder
+            ->addField('newField', '', '', $overridesConfiguration)
+            ->saveToTca();
+
+        self::assertEquals('newField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals($overridesConfiguration, $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']['newField']);
+    }
+
+    /**
+     * @test
+     */
     public function addTwoFieldsWithStringsAddsTwoFields()
     {
         $this->tcaBuilder

@@ -47,7 +47,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->selectedType = $type;
     }
 
-    public function addField(string $fieldName, string $position = '', string $altLabel = '')
+    public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = [])
     {
         if ($altLabel) {
             $fieldName .= ';' . $this->getLabel($altLabel);
@@ -56,6 +56,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $this->addFieldToPosition($fieldName, $position);
         } else {
             $this->fields[] = $fieldName;
+        }
+        if ($columnsOverrides) {
+            $this->addColumnsOverrides($fieldName, $columnsOverrides);
         }
     }
 
