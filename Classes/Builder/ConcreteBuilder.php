@@ -47,6 +47,17 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->selectedType = $type;
     }
 
+    public function removeType(string $type = '')
+    {
+        if (!$type) {
+            $type = $this->selectedType;
+        }
+
+        if ($type) {
+            unset($GLOBALS['TCA'][$this->table]['types'][$type]);
+        }
+    }
+
     public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = [])
     {
         if ($altLabel) {

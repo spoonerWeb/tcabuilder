@@ -122,6 +122,95 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function removeTypeWithoutGivenOrSelectedTypeDoesNothing()
+    {
+        $this->tcaBuilder
+            ->setTable('table')
+            ->setType('type')
+            ->addField('test')
+            ->saveToTca();
+
+        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+
+        $this->tcaBuilder
+            ->reset()
+            ->setTable('table')
+            ->removeType();
+
+        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+        self::assertNotEmpty($GLOBALS['TCA']['table']['types']['type']);
+    }
+
+    /**
+     * @test
+     */
+    public function removeTypeWithSelectedTypeRemovesType()
+    {
+        $this->tcaBuilder
+            ->setTable('table')
+            ->setType('type')
+            ->addField('test')
+            ->saveToTca();
+
+        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+
+        $this->tcaBuilder
+            ->reset()
+            ->setTable('table')
+            ->setType('type')
+            ->removeType();
+
+        self::assertCount(0, $GLOBALS['TCA']['table']['types']);
+        self::assertEmpty($GLOBALS['TCA']['table']['types']['type']);
+    }
+
+    /**
+     * @test
+     */
+    public function removeTypeWithGivenTypeRemovesType()
+    {
+        $this->tcaBuilder
+            ->setTable('table')
+            ->setType('type')
+            ->addField('test')
+            ->saveToTca();
+
+        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+
+        $this->tcaBuilder
+            ->reset()
+            ->setTable('table')
+            ->removeType('type');
+
+        self::assertCount(0, $GLOBALS['TCA']['table']['types']);
+        self::assertEmpty($GLOBALS['TCA']['table']['types']['type']);
+    }
+
+    /**
+     * @test
+     */
+    public function removeTypeWithGivenButUnusedTypeRemovesNothing()
+    {
+        $this->tcaBuilder
+            ->setTable('table')
+            ->setType('type')
+            ->addField('test')
+            ->saveToTca();
+
+        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+
+        $this->tcaBuilder
+            ->reset()
+            ->setTable('table')
+            ->removeType('nonExistingType');
+
+        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+        self::assertNotEmpty($GLOBALS['TCA']['table']['types']['type']);
+    }
+
+    /**
+     * @test
+     */
     public function addNoFieldAndSaveDirectlyReturnsEmptyString()
     {
         $this->tcaBuilder

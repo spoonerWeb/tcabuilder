@@ -69,6 +69,19 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * Removes a given or selected type
+     *
+     * @param string $type
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function removeType(string $type = ''): TcaBuilder
+    {
+        $this->tcaBuilder->removeType($type);
+
+        return $this;
+    }
+
+    /**
      * Sets a locallang file (beginning with 'EXT:') to be used
      * whenever using a label (label must begin with 'LANG:')
      *
