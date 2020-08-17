@@ -244,7 +244,7 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function addOverride(string $fieldName, array $override): TcaBuilder
     {
-        $this->tcaBuilder->addCustomOverride($fieldName, $override);
+        $this->tcaBuilder->addColumnsOverrides($fieldName, $override);
 
         return $this;
     }

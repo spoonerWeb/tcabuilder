@@ -599,7 +599,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
-    public function addOverrideReturnsGivenConfigurationInCustomOverrides()
+    public function addOverridesReturnsGivenConfigurationInColumnsOverrides()
     {
         $field = 'field';
         $config = [
@@ -615,6 +615,6 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             )
             ->saveToTca();
 
-        self::assertEquals([$field => $config], $GLOBALS['TCA']['table']['types']['type']['customOverrides']);
+        self::assertEquals([$field => $config], $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']);
     }
 }

@@ -24,7 +24,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected $fields = [];
 
-    protected $customOverrides = [];
+    protected $columnsOverrides = [];
 
     protected $locallangFile = '';
 
@@ -33,7 +33,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->table = '';
         $this->selectedType = '';
         $this->fields = [];
-        $this->customOverrides = [];
+        $this->columnsOverrides = [];
         $this->locallangFile = '';
     }
 
@@ -138,9 +138,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         return '--div--;' . $this->getLabel($label);
     }
 
-    public function addCustomOverride(string $fieldName, array $override)
+    public function addColumnsOverrides(string $fieldName, array $override)
     {
-        $this->customOverrides[$fieldName] = $override;
+        $this->columnsOverrides[$fieldName] = $override;
     }
 
     public function load()
@@ -148,7 +148,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
 
         $this->fields = GeneralUtility::trimExplode(',', $fields);
-        $this->customOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'] ?? null;
+        $this->columnsOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] ?? null;
     }
 
     public function save()
@@ -160,8 +160,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $fields = array_values(array_filter($this->fields));
         $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
 
-        if ($this->customOverrides) {
-            $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['customOverrides'] = $this->customOverrides;
+        if ($this->columnsOverrides) {
+            $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
         }
 
         $this->reset();
