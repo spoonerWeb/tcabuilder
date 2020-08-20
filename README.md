@@ -22,6 +22,8 @@ For example:
 
 ### General usage
 
+Recommendation is to use the `TcaBuilder` in the php files of your `Configuration/TCA/Overrides/` folder of your extension.
+
 1. Instantiate the `TcaBuilder` class
 1. Set the table and type to configure (may also be a not existing type yet)
 1. Use the methods to manipulate
