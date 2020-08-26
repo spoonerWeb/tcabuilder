@@ -2,7 +2,7 @@
         backupGlobals="true"
         backupStaticAttributes="false"
         bootstrap="../vendor/nimut/testing-framework/res/Configuration/UnitTestsBootstrap.php"
-        colors="true"
+        colors="false"
         convertErrorsToExceptions="false"
         convertWarningsToExceptions="true"
         forceCoversAnnotation="false"
@@ -23,4 +23,8 @@
             <directory suffix=".php">../Classes/</directory>
         </whitelist>
     </filter>
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+        <log type="junit" target="../build/junit-report.xml"/>
+    </logging>
 </phpunit>
