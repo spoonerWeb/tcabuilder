@@ -193,7 +193,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function addFieldToPosition(string $fieldName, string $position)
     {
-        [$direction, $fieldNameToSearch] = GeneralUtility::trimExplode(':', $position);
+        [$direction, ] = GeneralUtility::trimExplode(':', $position);
+        $fieldNameToSearch = str_replace($direction . ':', '', $position);
         $key = array_search($fieldNameToSearch, $this->fields, true);
         if ($key !== false) {
             switch ($direction) {

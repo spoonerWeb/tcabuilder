@@ -408,6 +408,18 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function addPaletteWithLllStringAndAlternativeLabelReturnsPaletteStringWithLabel()
+    {
+        $this->tcaBuilder
+            ->addPalette('newPalette', '', 'LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel')
+            ->saveToTca();
+
+        self::assertEquals('--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newPalette', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+    }
+
+    /**
+     * @test
+     */
     public function addTwoPalettesWithStringsReturnsPaletteString()
     {
         $this->tcaBuilder
@@ -438,6 +450,23 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function addThreePalettesWithStringsAndOneWithExactPositionLllStringReturnsPaletteString()
+    {
+        $this->tcaBuilder
+            ->addPalette('newPalette')
+            ->addPalette('newSecondPalette', '', 'LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel')
+            ->addPalette('newThirdPalette', 'before:--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette')
+            ->saveToTca();
+
+        self::assertEquals(
+            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+
+    /**
+     * @test
+     */
     public function addThreePalettesWithStringsAndOneWithPositionStringUsingFunctionReturnsPaletteString()
     {
         $this->tcaBuilder
@@ -448,6 +477,23 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;;newSecondPalette',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function addThreePalettesWithStringsAndOneWithPositionLllStringUsingFunctionReturnsPaletteString()
+    {
+        $this->tcaBuilder
+            ->addPalette('newPalette')
+            ->addPalette('newSecondPalette', '', 'LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel')
+            ->addPalette('newThirdPalette', 'before:' . $this->tcaBuilder->getPaletteString('newSecondPalette'))
+            ->saveToTca();
+
+        self::assertEquals(
+            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette',
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }
