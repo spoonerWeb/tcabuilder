@@ -13,6 +13,15 @@ stages:
   script:
     - php-cs-fixer fix --dry-run --config=.Build/.php_cs --diff
 
+"PHP Static Analyzer":
+  stage: test
+  image: composer:1
+  before_script:
+    - composer global require phpstan/phpstan
+  script:
+    - composer install
+    - /tmp/vendor/bin/phpstan analyse -l 4 -c .Build/phpstan.neon
+
 .unit_tests: &unit_tests
   stage: test
   image: php:$PHP_VERSION
