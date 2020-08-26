@@ -49,7 +49,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function removeType(string $type = '')
     {
-        if (!$type) {
+        if ($type === '') {
             $type = $this->selectedType;
         }
 
@@ -60,15 +60,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = [])
     {
-        if ($altLabel) {
+        if ($altLabel !== '') {
             $fieldName .= ';' . $this->getLabel($altLabel);
         }
-        if ($position) {
+        if ($position !== '') {
             $this->addFieldToPosition($fieldName, $position);
         } else {
             $this->fields[] = $fieldName;
         }
-        if ($columnsOverrides) {
+        if ($columnsOverrides !== []) {
             $this->addColumnsOverrides($fieldName, $columnsOverrides);
         }
     }
@@ -85,14 +85,10 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function addPalette(string $paletteName, string $position = '', string $altLabel = '')
     {
         $paletteNameArray[] = '--palette--';
-        if ($altLabel) {
-            $paletteNameArray[] = $this->getLabel($altLabel);
-        } else {
-            $paletteNameArray[] = '';
-        }
+        $paletteNameArray[] = $altLabel !== '' ? $this->getLabel($altLabel) : '';
         $paletteNameArray[] = $paletteName;
         $fieldName = implode(';', $paletteNameArray);
-        if ($position) {
+        if ($position !== '') {
             $this->addFieldToPosition($fieldName, $position);
         } else {
             $this->fields[] = $fieldName;
@@ -106,7 +102,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function getPaletteFieldName(string $paletteName): string
     {
-        $allPalettes = array_filter($this->fields, [$this, 'beginsWithPalette']);
+        $allPalettes = array_filter($this->fields, function ($value) : bool {
+            return $this->beginsWithPalette($value);
+        });
         foreach ($allPalettes as $palette) {
             if (strpos($palette, $paletteName) > 0) {
                 return $palette;
@@ -119,7 +117,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function addDiv(string $label, string $position = '')
     {
         $fieldName = '--div--;' . $this->getLabel($label);
-        if ($position) {
+        if ($position !== '') {
             $this->addFieldToPosition($fieldName, $position);
         } else {
             $this->fields[] = $fieldName;
@@ -138,7 +136,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function getDivByPosition(int $position): string
     {
-        $allDivs = array_values(array_filter($this->fields, [$this, 'beginsWithDiv']));
+        $allDivs = array_values(array_filter($this->fields, function ($value) : bool {
+            return $this->beginsWithDiv($value);
+        }));
 
         return $allDivs[$position] ?? '';
     }
@@ -174,7 +174,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $fields = array_values(array_filter($this->fields));
         $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
 
-        if ($this->columnsOverrides) {
+        if ($this->columnsOverrides !== []) {
             $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
         }
 
