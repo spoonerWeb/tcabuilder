@@ -102,7 +102,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function getPaletteFieldName(string $paletteName): string
     {
-        $allPalettes = array_filter($this->fields, function ($value) : bool {
+        $allPalettes = array_filter($this->fields, function ($value): bool {
             return $this->beginsWithPalette($value);
         });
         foreach ($allPalettes as $palette) {
@@ -136,7 +136,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function getDivByPosition(int $position): string
     {
-        $allDivs = array_values(array_filter($this->fields, function ($value) : bool {
+        $allDivs = array_values(array_filter($this->fields, function ($value): bool {
             return $this->beginsWithDiv($value);
         }));
 
