@@ -15,4 +15,4 @@ pecl install xdebug
 docker-php-ext-enable xdebug
 
 # Install composer
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
