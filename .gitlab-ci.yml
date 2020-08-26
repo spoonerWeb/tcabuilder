@@ -22,6 +22,20 @@ stages:
     - composer install
     - /tmp/vendor/bin/phpstan analyse -l 4 -c .Build/phpstan.neon
 
+"PHP Rector Analyzer":
+  stage: test
+  image: composer:1
+  before_script:
+    - composer install
+    - mkdir build
+  script:
+    - vendor/bin/rector process --config .Build/rector.php --dry-run --output-format=checkstyle > build/rector.xml
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: build/rector.xml
+
+
 .unit_tests: &unit_tests
   stage: test
   image: php:$PHP_VERSION
