@@ -1,0 +1,5 @@
+parameters:
+  paths:
+    - '../Classes/'
+  ignoreErrors:
+      - '#invalid value \(\$identifier\)#'

@@ -204,12 +204,11 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param string $divName
      * @param string $position
-     * @param string $altLabel
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder
      */
-    public function addDiv(string $divName, string $position = '', string $altLabel = ''): TcaBuilder
+    public function addDiv(string $divName, string $position = ''): TcaBuilder
     {
-        $this->tcaBuilder->addDiv($divName, $position, $altLabel);
+        $this->tcaBuilder->addDiv($divName, $position);
 
         return $this;
     }
