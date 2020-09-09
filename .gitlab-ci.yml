@@ -1,5 +1,5 @@
 include:
-  - remote: 'https://git.spooner.io/spooner-web/gitlab-anybadge-creator/-/blob/main/anybadges.yml'
+  - remote: 'https://git.spooner.io/spooner-web/gitlab-anybadge-creator/-/raw/main/anybadges.yml'
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -39,12 +39,11 @@ stages:
     reports:
       junit: build/rector.xml
 
-"Latest Version Badge":
-  <<: *create_badge
+"Create Badge":
   stage: badges
   script:
-    - latest_tag = $(git describe --abbrev=0)
-    - anybadge -l "Latest version" -v $latest_tag -f latestversion.svg -c blue
+    - latest_version = $(git describe --abbrev=0)
+    - anybadge -l "Latest Version" -v $latest_version -f latestVersion.svg -c blue
 
 .unit_tests: &unit_tests
   stage: test
