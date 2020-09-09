@@ -2,6 +2,7 @@
 
 [![pipeline status](https://git.spooner.io/spooner-web/tcabuilder/badges/main/pipeline.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
 [![coverage report](https://git.spooner.io/spooner-web/tcabuilder/badges/main/coverage.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
+[![Latest Version](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/artifacts/main/raw/badges/latestVersion.svg?job=Create+Badge)](https://git.spooner.io/spooner-web/tcabuilder/-/tags)
 
 ## What does it do?
 
