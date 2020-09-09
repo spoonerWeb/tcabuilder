@@ -42,7 +42,7 @@ stages:
 "Create Badge":
   stage: badges
   script:
-    - latest_version = $(git describe --abbrev=0)
+    - latest_version=$(git describe --abbrev=0)
     - anybadge -l "Latest Version" -v $latest_version -f latestVersion.svg -c blue
 
 .unit_tests: &unit_tests
