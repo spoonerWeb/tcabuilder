@@ -1,3 +1,6 @@
+include:
+  - remote: 'https://git.spooner.io/spooner-web/gitlab-anybadge-creator/-/blob/main/anybadges.yml'
+
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -5,6 +8,7 @@ cache:
 
 stages:
   - test
+  - badges
   - release
 
 "PHP CS Fixer":
@@ -35,6 +39,12 @@ stages:
     reports:
       junit: build/rector.xml
 
+"Latest Version Badge":
+  <<: *create_badge
+  stage: badges
+  script:
+    - latest_tag = $(git describe --abbrev=0)
+    - anybadge -l "Latest version" -v $latest_tag -f latestversion.svg -c blue
 
 .unit_tests: &unit_tests
   stage: test
