@@ -2,9 +2,9 @@
 
 [![pipeline status](https://git.spooner.io/spooner-web/tcabuilder/badges/main/pipeline.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
 [![coverage report](https://git.spooner.io/spooner-web/tcabuilder/badges/main/coverage.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
-[![Mutation MSI](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/7044/artifacts/file/badges/mutation_msi.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
-[![Mutation MCC](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/7044/artifacts/file/badges/mutation_mcc.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
-[![Mutation CCMSI](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/7044/artifacts/file/badges/mutation_ccmsi.svg)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
+[![Mutation MSI](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/artifacts/main/raw/badges/mutation_msi.svg?job=Mutation+Badges)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
+[![Mutation MCC](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/artifacts/main/raw/badges/mutation_mcc.svg?job=Mutation+Badges)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
+[![Mutation CCMSI](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/artifacts/main/raw/badges/mutation_ccmsi.svg?job=Mutation+Badges)](https://git.spooner.io/spooner-web/tcabuilder/-/commits/main)
 [![Latest Version](https://git.spooner.io/spooner-web/tcabuilder/-/jobs/artifacts/main/raw/badges/latestVersion.svg?job=Create+Badge)](https://git.spooner.io/spooner-web/tcabuilder/-/tags)
 
 ## What does it do?
