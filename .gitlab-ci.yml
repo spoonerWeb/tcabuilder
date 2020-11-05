@@ -14,18 +14,12 @@ stages:
 "PHP CS Fixer":
   stage: test
   image: ekreative/php-cs-fixer:2
-  only:
-    changes:
-      - "*.php"
   script:
     - php-cs-fixer fix --dry-run --config=.Build/.php_cs --diff
 
 "PHP Static Analyzer":
   stage: test
   image: composer:1
-  only:
-    changes:
-      - "*.php"
   before_script:
     - composer global require phpstan/phpstan
   script:
@@ -35,9 +29,6 @@ stages:
 "PHP Rector Analyzer":
   stage: test
   image: composer:1
-  only:
-    changes:
-      - "*.php"
   before_script:
     - composer install
     - mkdir build
@@ -57,9 +48,6 @@ stages:
 .unit_tests: &unit_tests
   stage: test
   image: php:$PHP_VERSION
-  only:
-    changes:
-      - "*.php"
   before_script:
     - apt-get update && apt-get install -y bash
     - bash ./.Build/docker_install.sh > /dev/null
