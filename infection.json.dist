@@ -1,0 +1,17 @@
+{
+    "source": {
+        "directories": [
+            "Classes"
+        ]
+    },
+    "phpUnit": {
+        "configDir": ".Build"
+    },
+    "logs": {
+        "text": "build/infection.log",
+        "json": "build/infection-log.json"
+    },
+    "mutators": {
+        "@default": true
+    }
+}
