@@ -262,6 +262,13 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
         return $this;
     }
 
+    public function addCustomPalette(string $paletteId, array $showItems, string $label = ''): TcaBuilder
+    {
+        $this->tcaBuilder->addCustomPalette($paletteId, $showItems, $label);
+
+        return $this;
+    }
+
     /**
      * Loads the TCA fields from table and types
      *

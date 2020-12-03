@@ -26,6 +26,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected $columnsOverrides = [];
 
+    protected $customPalettes = [];
+
     protected $locallangFile = '';
 
     public function reset()
@@ -34,6 +36,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->selectedType = '';
         $this->fields = [];
         $this->columnsOverrides = [];
+        $this->customPalettes = [];
         $this->locallangFile = '';
     }
 
@@ -157,6 +160,14 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->columnsOverrides[$fieldName] = $override;
     }
 
+    public function addCustomPalette(string $paletteId, array $showItems, string $label = '')
+    {
+        $this->customPalettes[$paletteId] = [
+            'label' => $label,
+            'showitem' => implode(',', $showItems)
+        ];
+    }
+
     public function load()
     {
         $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
@@ -176,6 +187,12 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
         if ($this->columnsOverrides !== []) {
             $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
+        }
+
+        if ($this->customPalettes !== []) {
+            foreach ($this->customPalettes as $customPaletteId => $customPaletteConfiguration) {
+                $GLOBALS['TCA'][$this->table]['palettes'][$customPaletteId] = $customPaletteConfiguration;
+            }
         }
 
         $this->reset();
