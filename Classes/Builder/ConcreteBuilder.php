@@ -189,10 +189,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
         }
 
-        if ($this->customPalettes !== []) {
-            foreach ($this->customPalettes as $customPaletteId => $customPaletteConfiguration) {
-                $GLOBALS['TCA'][$this->table]['palettes'][$customPaletteId] = $customPaletteConfiguration;
-            }
+        foreach ($this->customPalettes as $customPaletteId => $customPaletteConfiguration) {
+            $GLOBALS['TCA'][$this->table]['palettes'][$customPaletteId] = $customPaletteConfiguration;
         }
 
         $this->reset();
