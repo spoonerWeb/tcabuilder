@@ -48,15 +48,13 @@ stages:
 .unit_tests: &unit_tests
   stage: test
   image: php:$PHP_VERSION
-  variables:
-    XDEBUG_MODE: "coverage"
   before_script:
     - apt-get update && apt-get install -y bash
     - bash ./.Build/docker_install.sh > /dev/null
     - composer install
   script:
     - ls -l
-    - vendor/bin/phpunit -c ./.Build/phpunit.xml
+    - XDEBUG_MODE=coverage vendor/bin/phpunit -c ./.Build/phpunit.xml
   artifacts:
     reports:
       junit: build/*-report.xml
