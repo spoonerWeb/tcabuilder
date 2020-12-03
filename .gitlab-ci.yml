@@ -35,6 +35,7 @@ stages:
     - apk update && apk add icu-dev
     - docker-php-ext-install intl
   script:
+    - vendor/bin/rector process --config .Build/rector.php --dry-run
     - vendor/bin/rector process --config .Build/rector.php --dry-run --output-format=checkstyle > build/rector.xml
   allow_failure: true
   artifacts:
