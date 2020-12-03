@@ -72,6 +72,11 @@ stages:
   variables:
     PHP_VERSION: '7.4'
 
+"Unit Tests with PHP 8.0":
+  <<: *unit_tests
+  variables:
+    PHP_VERSION: '8.0'
+
 "Mutation Tests":
   stage: test
   image: php:7.4
