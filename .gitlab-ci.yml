@@ -8,6 +8,7 @@ cache:
 
 stages:
   - test
+  - deploy
   - badges
   - release
 
@@ -123,6 +124,16 @@ stages:
       - badges/
     when: always
     expire_in: 4 weeks
+
+"Add to packages":
+  stage: deploy
+  script:
+    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data branch=$CI_COMMIT_REF_SLUG "https://git.spooner.io/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
+
+"Add release to packages":
+  stage: release
+  script:
+    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=$CI_COMMIT_TAG "https://git.spooner.io/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
 
 "Upload to TER":
   stage: release
