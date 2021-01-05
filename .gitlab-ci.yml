@@ -55,7 +55,7 @@ stages:
   before_script:
     - apt-get update && apt-get install -y bash
     - bash ./.Build/docker_install.sh > /dev/null
-    - composer install
+    - composer install --ignore-platform-reqs
   script:
     - ls -l
     - XDEBUG_MODE=coverage vendor/bin/phpunit -c ./.Build/phpunit.xml
@@ -72,6 +72,11 @@ stages:
   <<: *unit_tests
   variables:
     PHP_VERSION: '7.4'
+
+"Unit Tests with PHP 8.0":
+  <<: *unit_tests
+  variables:
+    PHP_VERSION: '8.0'
 
 "Mutation Tests":
   stage: test
