@@ -1,5 +1,6 @@
 include:
   - remote: 'https://git.spooner.io/spooner-web/gitlab-anybadge-creator/-/raw/main/anybadges.yml'
+  - remote: 'https://git.spooner.io/ci-templates/composer-packages/-/raw/main/composer-packages.yml'
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -8,7 +9,7 @@ cache:
 
 stages:
   - test
-  - deploy
+  - packages
   - badges
   - release
 
@@ -130,18 +131,6 @@ stages:
       - badges/
     when: always
     expire_in: 4 weeks
-
-"Add to packages":
-  stage: deploy
-  script:
-    - apk --no-cache add curl
-    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data branch=$CI_COMMIT_REF_SLUG "https://git.spooner.io/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
-
-"Add release to packages":
-  stage: release
-  script:
-    - apk --no-cache add curl
-    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=$CI_COMMIT_TAG "https://git.spooner.io/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
 
 "Upload to TER":
   stage: release
