@@ -354,6 +354,21 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function replaceFieldWithStringAndPositionReturnsFieldListInCorrectOrder()
+    {
+        $this->tcaBuilder
+            ->addField('newField')
+            ->addField('newSecondField')
+            ->addField('newThirdField')
+            ->moveField('newThirdField', 'replace:newField')
+            ->saveToTca();
+
+        self::assertEquals('newThirdField,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+    }
+
+    /**
+     * @test
+     */
     public function moveFieldWithStringAndPositionAndLabelReturnsFieldListInCorrectOrder()
     {
         $this->tcaBuilder
@@ -443,6 +458,23 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;;newSecondPalette',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function addThreePalettesWithStringsAndMoveOneWithExactPositionStringReturnsPaletteString()
+    {
+        $this->tcaBuilder
+            ->addPalette('newPalette')
+            ->addPalette('newSecondPalette')
+            ->addPalette('newThirdPalette', 'replace:--palette--;;newSecondPalette')
+            ->saveToTca();
+
+        self::assertEquals(
+            '--palette--;;newPalette,--palette--;;newThirdPalette',
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }
@@ -613,6 +645,23 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             '--div--;positionDiv,--div--;newDiv,--div--;secondDiv',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function addTwoDivsWithLabelAndReplaceOnePositionReturnsListWithTwoDivs()
+    {
+        $this->tcaBuilder
+            ->addDiv('newDiv')
+            ->addDiv('secondDiv')
+            ->addDiv('positionDiv', 'replace:' . $this->tcaBuilder->getDivString(0))
+            ->saveToTca();
+
+        self::assertEquals(
+            '--div--;positionDiv,--div--;secondDiv',
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }

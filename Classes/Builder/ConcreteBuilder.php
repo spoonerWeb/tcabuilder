@@ -216,6 +216,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
                 case 'before':
                     array_splice($this->fields, $key, 0, $fieldName);
                     break;
+                case 'replace':
+                    array_splice($this->fields, $key, 1, $fieldName);
+                    break;
                 case 'after':
                     array_splice($this->fields, ++$key, 0, $fieldName);
                     break;

@@ -47,13 +47,13 @@ Recommendation is to use the `TcaBuilder` in the php files of your `Configuratio
 | `loadConfiguration` | Shorter method to run `setTable`, `setType` and `load` at once | `string` $tableName <br> `string` $typeName |
 | `useLocalLangFile` | Set a locallang file (beginning with `EXT:`) to use in labels | `string` $localLangFile |
 | `saveToTca` | Saves the manipulated configuration to TCA |  |
-| `addField` | Adds a field to selected type | `string` $typeName <br> `string` $position (optional) <br> `string` $alternativeLabel (optional) |
-| `addPalette` | Adds an existing palette to selected type | `string` $paletteName <br> `string` $position (optional)<br> `string` $alternativeLabel (optional) |
+| `addField` | Adds a field to selected type | `string` $typeName <br> `string` [$position (optional)](#positioning) <br> `string` $alternativeLabel (optional) |
+| `addPalette` | Adds an existing palette to selected type | `string` $paletteName <br> `string` [$position (optional)](#positioning)<br> `string` $alternativeLabel (optional) |
 | `addDiv` | Adds a div (tab) to selected type | `string` $divName <br> `string` $label |
 | `removeField` | Removes a field from selected type | `string` $fieldName |
 | `removePalette` | Removes a palette from selected type | `string` $paletteName |
 | `removeDiv` | Removes a div (tab) from selected type, either by position (index, beginning with 0) or by label | `string`&#124;`int` $positionOrLabel |
-| `moveField` | Moves a field to a new position (alternatively with a new label) | `string` $fieldName <br> `string` $newPosition <br> `string` $newLabel (optional) |
+| `moveField` | Moves a field to a new position (alternatively with a new label) | `string` $fieldName <br> `string` [$newPosition](#positioning)<br> `string` $newLabel (optional) |
 | `movePalette` | Moves a palette to a new position (alternatively with a new label) | `string` $paletteName <br> `string` $newPosition <br> `string` $newLabel (optional) |
 | `addOverride` | Adds a custom override of a field | `string` $fieldName <br> `array` $configuration |
 
@@ -63,6 +63,14 @@ Recommendation is to use the `TcaBuilder` in the php files of your `Configuratio
 | ----------- | ----------- | ---------- | ------- |
 | `getPaletteString` | Finds the complete palette string which is used in list (for using it in position strings) | `string` $paletteName | `string` The complete palette string with `--palette--` and the possible label config |
 | `getDivString` | Finds the complete div string which is used in list (for using it in position strings), either by position (index, beginning with 0) or by label | `string`&#124;`int` $positionOrLabel | `string` The complete palette string with `--div--` and the div's label |
+
+#### <a id="positioning" />Possible values for positioning fields, palettes or divs
+
+| Value | Description |
+| ----- | ----------- |
+| `before:<item>` | Moves the item before the given item | 
+| `after:<item>` | Moves the item after the given item | 
+| `replace:<item>` | Replaces the given item | 
 
 ## Examples
 
