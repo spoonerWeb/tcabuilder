@@ -1,5 +1,5 @@
 include:
-  - remote: 'https://git.spooner.io/spooner-web/gitlab-anybadge-creator/-/raw/main/anybadges.yml'
+  - remote: 'https://git.spooner.io/ci-templates/gitlab-anybadge-creator/-/raw/main/anybadges.yml'
   - remote: 'https://git.spooner.io/ci-templates/composer-packages/-/raw/main/composer-packages.yml'
 
 cache:
