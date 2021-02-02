@@ -48,10 +48,6 @@ stages:
     - vendor/bin/rector process --config .Build/rector.php --dry-run
     - vendor/bin/rector process --config .Build/rector.php --dry-run --output-format=checkstyle > build/rector.xml
   allow_failure: true
-  rules:
-    - changes:
-        - Classes/*.php
-        - Tests/*.php
   artifacts:
     reports:
       junit: build/rector.xml
@@ -72,10 +68,6 @@ stages:
   script:
     - ls -l
     - XDEBUG_MODE=coverage vendor/bin/phpunit -c ./.Build/phpunit.xml
-  rules:
-    - changes:
-      - Classes/*.php
-      - Tests/*.php
   artifacts:
     reports:
       junit: build/*-report.xml
@@ -102,10 +94,6 @@ stages:
   variables:
     GIT_STRATEGY: "clone"
   allow_failure: true
-  rules:
-    - changes:
-        - Classes/*.php
-        - Tests/*.php
   before_script:
     - set -xe
     - apt-get update -yqq
@@ -131,10 +119,6 @@ stages:
   stage: badges
   image: python:3.9
   allow_failure: true
-  rules:
-    - changes:
-        - Classes/*.php
-        - Tests/*.php
   needs: ["Mutation Tests"]
   before_script:
     - echo "Python other dependencies installation"
