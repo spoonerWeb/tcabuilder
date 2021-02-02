@@ -17,12 +17,20 @@ stages:
 "PHP CS Fixer":
   stage: test
   image: ekreative/php-cs-fixer:2
+  rules:
+    - changes:
+        - Classes/*.php
+        - Tests/*.php
   script:
     - php-cs-fixer fix --dry-run --config=.Build/.php_cs --diff
 
 "PHP Static Analyzer":
   stage: test
   image: composer:2.0.7
+  rules:
+    - changes:
+        - Classes/*.php
+        - Tests/*.php
   before_script:
     - composer global require phpstan/phpstan
   script:
@@ -41,6 +49,10 @@ stages:
     - vendor/bin/rector process --config .Build/rector.php --dry-run
     - vendor/bin/rector process --config .Build/rector.php --dry-run --output-format=checkstyle > build/rector.xml
   allow_failure: true
+  rules:
+    - changes:
+        - Classes/*.php
+        - Tests/*.php
   artifacts:
     reports:
       junit: build/rector.xml
@@ -61,6 +73,10 @@ stages:
   script:
     - ls -l
     - XDEBUG_MODE=coverage vendor/bin/phpunit -c ./.Build/phpunit.xml
+  rules:
+    - changes:
+      - Classes/*.php
+      - Tests/*.php
   artifacts:
     reports:
       junit: build/*-report.xml
@@ -87,6 +103,10 @@ stages:
   variables:
     GIT_STRATEGY: "clone"
   allow_failure: true
+  rules:
+    - changes:
+        - Classes/*.php
+        - Tests/*.php
   before_script:
     - set -xe
     - apt-get update -yqq
