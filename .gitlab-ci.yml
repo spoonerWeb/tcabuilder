@@ -132,6 +132,10 @@ stages:
   stage: badges
   image: python:3.9
   allow_failure: true
+  rules:
+    - changes:
+        - Classes/*.php
+        - Tests/*.php
   needs: ["Mutation Tests"]
   before_script:
     - echo "Python other dependencies installation"
