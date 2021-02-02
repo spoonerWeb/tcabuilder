@@ -9,7 +9,6 @@ cache:
 
 stages:
   - test
-  - refresh
   - packages
   - badges
   - release
@@ -174,18 +173,4 @@ stages:
         TAG_MESSAGE=`git tag -n10 -l $CI_COMMIT_TAG | sed 's/^[0-9.]*[ ]*//g'`
         echo "Uploading release ${CI_COMMIT_TAG} to TER"
         /tmp/vendor/bin/tailor ter:publish --comment "$TAG_MESSAGE" "$CI_COMMIT_TAG" "$TYPO3_EXTENSION_KEY"
-      fi;
-
-"Refresh TER token":
-  stage: refresh
-  image: composer:2.0.7
-  only:
-    - schedules
-  before_script:
-    - composer global require typo3/tailor
-  script:
-    - >
-      if [ -n "$TYPO3_API_REFRESH_TOKEN" ] && [ -n "$TYPO3_EXTENSION_KEY" ]; then
-        echo "Refreshing access token"
-        /tmp/vendor/bin/tailor ter:token:refresh $TYPO3_API_REFRESH_TOKEN
       fi;
