@@ -47,15 +47,30 @@ Recommendation is to use the `TcaBuilder` in the php files of your `Configuratio
 | `loadConfiguration` | Shorter method to run `setTable`, `setType` and `load` at once | `string` $tableName <br> `string` $typeName |
 | `useLocalLangFile` | Set a locallang file (beginning with `EXT:`) to use in labels | `string` $localLangFile |
 | `saveToTca` | Saves the manipulated configuration to TCA |  |
+
+#### Manipulating types
+
+| Method name | Description | Parameters |
+| ----------- | ----------- | ---------- |
 | `addField` | Adds a field to selected type | `string` $typeName <br> `string` [$position (optional)](#positioning) <br> `string` $alternativeLabel (optional) |
-| `addPalette` | Adds an existing palette to selected type | `string` $paletteName <br> `string` [$position (optional)](#positioning)<br> `string` $alternativeLabel (optional) |
-| `addDiv` | Adds a div (tab) to selected type | `string` $divName <br> `string` $label |
 | `removeField` | Removes a field from selected type | `string` $fieldName |
-| `removePalette` | Removes a palette from selected type | `string` $paletteName |
-| `removeDiv` | Removes a div (tab) from selected type, either by position (index, beginning with 0) or by label | `string`&#124;`int` $positionOrLabel |
 | `moveField` | Moves a field to a new position (alternatively with a new label) | `string` $fieldName <br> `string` [$newPosition](#positioning)<br> `string` $newLabel (optional) |
+| `addPalette` | Adds an existing palette to selected type | `string` $paletteName <br> `string` [$position (optional)](#positioning)<br> `string` $alternativeLabel (optional) |
+| `removePalette` | Removes a palette from selected type | `string` $paletteName |
 | `movePalette` | Moves a palette to a new position (alternatively with a new label) | `string` $paletteName <br> `string` $newPosition <br> `string` $newLabel (optional) |
+| `addDiv` | Adds a div (tab) to selected type | `string` $divName <br> `string` $label |
+| `removeDiv` | Removes a div (tab) from selected type, either by position (index, beginning with 0) or by label | `string`&#124;`int` $positionOrLabel |
 | `addOverride` | Adds a custom override of a field | `string` $fieldName <br> `array` $configuration |
+| `initialize` | Initializes the type with an empty list |  |
+
+#### Manipulating palettes
+
+| Method name | Description | Parameters |
+| ----------- | ----------- | ---------- |
+| `addCustomPalette` | Creates a new palette (and optionally inserts it directly to given position) | `string` $paletteId <br> `array` $fields <br> `string` $label (optional) <br> `string` [$position (optional)](#positioning) |
+| `addFieldToPalette` | Adds a field to a palette | `string` $paletteId <br> `string` $field <br> `string` [$position (optional)](#positioning) |
+| `removeFieldFromPalette` | Removes a field from a palette | `string` $paletteId <br> `string` $field |
+| `initializePalette` | Initializes the palette with an empty list | `string` $paletteId  |
 
 #### Helper methods
 
