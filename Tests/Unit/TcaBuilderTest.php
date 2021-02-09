@@ -1,5 +1,5 @@
 <?php
-namespace SpoonerWeb\TcaBuilder\Unit\Tests;
+namespace SpoonerWeb\TcaBuilder\Tests\Unit;
 
 /*
  * This file is part of a TYPO3 extension.
