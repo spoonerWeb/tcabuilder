@@ -47,6 +47,11 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->table = $table;
     }
 
+    public function getTable(): string
+    {
+        return $this->table;
+    }
+
     public function setType(string $type)
     {
         $this->selectedType = $type;
@@ -164,6 +169,11 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
     }
 
+    public function setFieldsForPalette(string $paletteId, array $fields)
+    {
+        $this->customPalettes[$paletteId]['showitem'] = implode(',', $fields);
+    }
+
     public function load()
     {
         $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
@@ -172,7 +182,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->columnsOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] ?? null;
     }
 
-    public function save()
+    public function save(bool $resetAfterSave = true)
     {
         if ($this->table === '' && $this->selectedType === '') {
             return;
@@ -189,7 +199,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             $GLOBALS['TCA'][$this->table]['palettes'][$customPaletteId] = $customPaletteConfiguration;
         }
 
-        $this->reset();
+        if ($resetAfterSave) {
+            $this->reset();
+        }
     }
 
     public function useLocalLangFile(string $filePath)

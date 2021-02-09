@@ -883,4 +883,45 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }
+
+    /**
+     * @test
+     */
+    public function addFieldToExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    {
+        $this->tcaBuilder
+            ->addCustomPalette('custom', ['field1', 'field2'])
+            ->addPalette('custom')
+            ->addFieldToPalette('custom', 'field3')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field1,field2,field3',
+            $GLOBALS['TCA']['table']['palettes']['custom']['showitem']
+        );
+        self::assertEquals(
+            '--palette--;;custom',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+    /**
+     * @test
+     */
+    public function removeFieldOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    {
+        $this->tcaBuilder
+            ->addCustomPalette('custom', ['field1', 'field2'])
+            ->addPalette('custom')
+            ->removeFieldFromPalette('custom', 'field1')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field2',
+            $GLOBALS['TCA']['table']['palettes']['custom']['showitem']
+        );
+        self::assertEquals(
+            '--palette--;;custom',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
 }

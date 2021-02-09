@@ -15,6 +15,7 @@ namespace SpoonerWeb\TcaBuilder;
  */
 
 use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
+use SpoonerWeb\TcaBuilder\Builder\ConcretePaletteBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
@@ -25,9 +26,15 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $tcaBuilder;
 
+    /**
+     * @var \SpoonerWeb\TcaBuilder\Builder\ConcretePaletteBuilder
+     */
+    protected $paletteBuilder;
+
     public function __construct()
     {
         $this->tcaBuilder = GeneralUtility::makeInstance(ConcreteBuilder::class);
+        $this->paletteBuilder = GeneralUtility::makeInstance(ConcretePaletteBuilder::class);
     }
 
     /**
@@ -279,6 +286,41 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param string $paletteId
+     * @param string $field
+     * @param string $position
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function addFieldToPalette(string $paletteId, string $field, string $position = ''): TcaBuilder
+    {
+        $this->saveToTca(false);
+        $this->paletteBuilder->load($paletteId, $this->tcaBuilder->getTable());
+        $this->paletteBuilder->addField($field, $position);
+        $this->tcaBuilder->setFieldsForPalette($paletteId, $this->paletteBuilder->returnCurrentConfiguration());
+        $this->paletteBuilder->saveToTca();
+        $this->saveToTca(false);
+
+        return $this;
+    }
+
+    /**
+     * @param string $paletteId
+     * @param string $field
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function removeFieldFromPalette(string $paletteId, string $field): TcaBuilder
+    {
+        $this->saveToTca(false);
+        $this->paletteBuilder->load($paletteId, $this->tcaBuilder->getTable());
+        $this->paletteBuilder->removeField($field);
+        $this->tcaBuilder->setFieldsForPalette($paletteId, $this->paletteBuilder->returnCurrentConfiguration());
+        $this->paletteBuilder->saveToTca();
+        $this->saveToTca(false);
+
+        return $this;
+    }
+
+    /**
      * Loads the TCA fields from table and types
      *
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder
@@ -309,9 +351,11 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Saves the configuration as TCA field list
+     *
+     * @param bool $resetAfterSave
      */
-    public function saveToTca()
+    public function saveToTca(bool $resetAfterSave = true)
     {
-        $this->tcaBuilder->save();
+        $this->tcaBuilder->save($resetAfterSave);
     }
 }
