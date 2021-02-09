@@ -3,11 +3,6 @@
   "description": "Utility to easily maintain and create your TCA forms",
   "type": "library",
   "license": "GPL-2.0-or-later",
-  "require": {
-    "php": "^7.2 ",
-    "typo3/cms-backend": "^v8.7 || ^9.5 || ^10.4 || ^11.0",
-    "typo3/cms-core": "^v8.7 || ^9.5 || ^10.4 || ^11.0"
-  },
   "authors": [
     {
       "name": "Thomas Löffler",
@@ -25,6 +20,11 @@
       "url": "https://paypal.me/Tomalo"
     }
   ],
+  "require": {
+    "php": ">= 7.2, < 8.0",
+    "typo3/cms-backend": "^v8.7 || ^v9.5 || ^v10.4 || ^v11.0",
+    "typo3/cms-core": "^v8.7 || ^v9.5 || ^v10.4 || ^v11.0"
+  },
   "require-dev": {
     "nimut/testing-framework": "^4.2 || ^5.1",
     "rector/rector": "^v0.7"
@@ -34,7 +34,17 @@
       "SpoonerWeb\\TcaBuilder\\": "Classes"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SpoonerWeb\\TcaBuilder\\Tests\\": "Tests"
+    }
+  },
   "scripts": {
     "test:unit": "phpunit -c ./.Build/phpunit.xml"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "tcabuilder"
+    }
   }
 }
