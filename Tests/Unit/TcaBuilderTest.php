@@ -949,6 +949,29 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function initializeTypeWithEmptyListAndThenNewFieldsReturnsTypeListWithNewAddedFields()
+    {
+        $this->tcaBuilder
+            ->addField('field1')
+            ->addField('field2', '', '', ['config' => 'input'])
+            ->initialize()
+            ->addField('field3')
+            ->addField('field5', '', '', ['config' => 'input'])
+            ->saveToTca();
+
+        self::assertEquals(
+            'field3,field5',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+        self::assertEquals(
+            ['field5' => ['config' => 'input']],
+            $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']
+        );
+    }
+
+    /**
+     * @test
+     */
     public function initializePaletteWithEmptyListReturnsEmptyPaletteList()
     {
         $this->tcaBuilder
