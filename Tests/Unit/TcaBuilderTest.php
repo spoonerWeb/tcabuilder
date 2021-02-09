@@ -836,4 +836,20 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             $GLOBALS['TCA']['table']['palettes']['custom']
         );
     }
+
+    /**
+     * @test
+     */
+    public function addFieldBeforeFirstFieldReturnsCorrectPosition()
+    {
+        $this->tcaBuilder
+            ->addField('field1')
+            ->addField('field2', 'before:field1')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field2,field1',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
 }
