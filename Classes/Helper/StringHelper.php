@@ -29,10 +29,6 @@ class StringHelper
 
     public static function stringStartsWith(string $string, string $startsWith): bool
     {
-        if (function_exists('str_starts_with')) {
-            return str_starts_with($string, $startsWith);
-        }
-
         return strpos($string, $startsWith) === 0;
     }
 }
