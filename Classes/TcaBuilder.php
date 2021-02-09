@@ -342,6 +342,17 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param string $type
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function copyFromType(string $type): TcaBuilder
+    {
+        $this->tcaBuilder->copyFromType($type);
+
+        return $this;
+    }
+
+    /**
      * Loads the TCA fields from table and types
      *
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder

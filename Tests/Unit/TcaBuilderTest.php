@@ -1012,4 +1012,69 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }
+
+    /**
+     * @test
+     */
+    public function copyFromExistingTypeToNewTypeReturnsSameList()
+    {
+        $this->tcaBuilder
+            ->addField('field3')
+            ->addField('field5')
+            ->saveToTca();
+
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'newType')
+            ->copyFromType('type')
+            ->saveToTca();
+
+        self::assertEquals(
+            $GLOBALS['TCA']['table']['types']['type'],
+            $GLOBALS['TCA']['table']['types']['newType']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function copyFromExistingTypeAndAddingNewFieldReturnsChangedList()
+    {
+        $this->tcaBuilder
+            ->addField('field3')
+            ->addField('field5')
+            ->saveToTca();
+
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'newType')
+            ->copyFromType('type')
+            ->addField('field4', 'before:field5')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field3,field4,field5',
+            $GLOBALS['TCA']['table']['types']['newType']['showitem']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function copyFromExistingTypeAndRemovingFieldReturnsChangedList()
+    {
+        $this->tcaBuilder
+            ->addField('field3')
+            ->addField('field5')
+            ->saveToTca();
+
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'newType')
+            ->copyFromType('type')
+            ->removeField('field3')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field5',
+            $GLOBALS['TCA']['table']['types']['newType']['showitem']
+        );
+    }
 }

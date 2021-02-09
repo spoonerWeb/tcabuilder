@@ -77,6 +77,14 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
     }
 
+    public function copyFromType(string $type)
+    {
+        $saveCurrentType = $this->selectedType;
+        $this->setType($type);
+        $this->load();
+        $this->setType($saveCurrentType);
+    }
+
     public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = [])
     {
         if ($altLabel !== '') {
