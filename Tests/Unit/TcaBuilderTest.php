@@ -924,4 +924,46 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }
+
+    /**
+     * @test
+     */
+    public function initializeTypeWithEmptyListReturnsEmptyTypeListAndEmptyOverrides()
+    {
+        $this->tcaBuilder
+            ->addField('field1')
+            ->addField('field2', '', '', ['config' => 'input'])
+            ->initialize()
+            ->saveToTca();
+
+        self::assertEquals(
+            '',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+        self::assertEquals(
+            [],
+            $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function initializePaletteWithEmptyListReturnsEmptyPaletteList()
+    {
+        $this->tcaBuilder
+            ->addCustomPalette('palette', ['field1', 'field2'])
+            ->addPalette('palette')
+            ->initializePalette('palette')
+            ->saveToTca();
+
+        self::assertEquals(
+            '',
+            $GLOBALS['TCA']['table']['palettes']['palette']['showitem']
+        );
+        self::assertEquals(
+            '--palette--;;palette',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
 }

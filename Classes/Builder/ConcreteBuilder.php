@@ -28,6 +28,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected $columnsOverrides = [];
 
+    protected $initializeOverrides = false;
+
     protected $customPalettes = [];
 
     protected $locallangFile = '';
@@ -40,6 +42,13 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->columnsOverrides = [];
         $this->customPalettes = [];
         $this->locallangFile = '';
+    }
+
+    public function initialize()
+    {
+        $this->fields = [];
+        $this->columnsOverrides = [];
+        $this->initializeOverrides = true;
     }
 
     public function setTable(string $table)
@@ -191,7 +200,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $fields = array_values(array_filter($this->fields));
         $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
 
-        if ($this->columnsOverrides !== []) {
+        if ($this->columnsOverrides !== [] || $this->initializeOverrides) {
             $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
         }
 

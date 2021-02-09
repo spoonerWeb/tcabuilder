@@ -321,6 +321,27 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function initialize(): TcaBuilder
+    {
+        $this->tcaBuilder->initialize();
+
+        return $this;
+    }
+
+    /**
+     * @param string $paletteId
+     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     */
+    public function initializePalette(string $paletteId): TcaBuilder
+    {
+        $this->tcaBuilder->setFieldsForPalette($paletteId, []);
+
+        return $this;
+    }
+
+    /**
      * Loads the TCA fields from table and types
      *
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder
