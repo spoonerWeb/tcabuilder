@@ -840,6 +840,37 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function addCustomPaletteWithPositionReturnsCustomPaletteInPalettesConfigurationAndPaletteInType()
+    {
+        $this->tcaBuilder
+            ->addField('field1')
+            ->addField('field2')
+            ->addCustomPalette(
+                'custom',
+                [
+                    'header',
+                    'bodytext',
+                    'hidden'
+                ],
+                'customPaletteLabel',
+                'before:field2'
+            )
+            ->saveToTca();
+
+        self::assertEquals(
+            ['label' => 'customPaletteLabel', 'showitem' => 'header,bodytext,hidden'],
+            $GLOBALS['TCA']['table']['palettes']['custom']
+        );
+
+        self::assertEquals(
+            'field1,--palette--;;custom,field2',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+
+    /**
+     * @test
+     */
     public function addFieldBeforeFirstFieldReturnsCorrectPosition()
     {
         $this->tcaBuilder

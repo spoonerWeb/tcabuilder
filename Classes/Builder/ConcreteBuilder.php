@@ -160,12 +160,16 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $this->columnsOverrides[$fieldName] = $override;
     }
 
-    public function addCustomPalette(string $paletteId, array $showItems, string $label = '')
+    public function addCustomPalette(string $paletteId, array $showItems, string $label = '', string $position = '')
     {
         $this->customPalettes[$paletteId] = [
             'label' => $label,
             'showitem' => implode(',', $showItems)
         ];
+
+        if ($position) {
+            $this->addPalette($paletteId, $position);
+        }
     }
 
     public function load()

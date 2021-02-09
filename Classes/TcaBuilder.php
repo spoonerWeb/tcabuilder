@@ -268,11 +268,12 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      * @param string $paletteId
      * @param array $showItems
      * @param string $label
+     * @param string $position
      * @return \SpoonerWeb\TcaBuilder\TcaBuilder
      */
-    public function addCustomPalette(string $paletteId, array $showItems, string $label = ''): TcaBuilder
+    public function addCustomPalette(string $paletteId, array $showItems, string $label = '', string $position = ''): TcaBuilder
     {
-        $this->tcaBuilder->addCustomPalette($paletteId, $showItems, $label);
+        $this->tcaBuilder->addCustomPalette($paletteId, $showItems, $label, $position);
 
         return $this;
     }
