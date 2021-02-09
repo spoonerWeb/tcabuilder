@@ -904,6 +904,29 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             $GLOBALS['TCA']['table']['types']['type']['showitem']
         );
     }
+
+    /**
+     * @test
+     */
+    public function addFieldWithPositionToExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    {
+        $this->tcaBuilder
+            ->addCustomPalette('custom', ['field1', 'field2'])
+            ->addPalette('custom')
+            ->addFieldToPalette('custom', 'field3', 'after:field1')
+            ->addFieldToPalette('custom', 'field5', 'replace:field2')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field1,field3,field5',
+            $GLOBALS['TCA']['table']['palettes']['custom']['showitem']
+        );
+        self::assertEquals(
+            '--palette--;;custom',
+            $GLOBALS['TCA']['table']['types']['type']['showitem']
+        );
+    }
+
     /**
      * @test
      */
