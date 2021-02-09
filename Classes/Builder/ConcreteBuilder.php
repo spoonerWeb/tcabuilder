@@ -14,6 +14,8 @@ namespace SpoonerWeb\TcaBuilder\Builder;
  * The TYPO3 project - inspiring people to share!
  */
 
+use SpoonerWeb\TcaBuilder\Helper\PositionHelper;
+use SpoonerWeb\TcaBuilder\Helper\StringHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
@@ -66,11 +68,9 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         if ($altLabel !== '') {
             $fieldName .= ';' . $this->getLabel($altLabel);
         }
-        if ($position !== '') {
-            $this->addFieldToPosition($fieldName, $position);
-        } else {
-            $this->fields[] = $fieldName;
-        }
+
+        PositionHelper::addFieldToPosition($this->fields, $fieldName, $position);
+
         if ($columnsOverrides !== []) {
             $this->addColumnsOverrides($fieldName, $columnsOverrides);
         }
@@ -79,8 +79,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function removeField(string $fieldName)
     {
         foreach ($this->fields as $field) {
-            if (strpos($field, $fieldName) === 0) {
-                $this->removeStringInList($field);
+            if (StringHelper::stringStartsWith($field, $fieldName)) {
+                StringHelper::removeStringInList($this->fields, $field);
             }
         }
     }
@@ -91,16 +91,12 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         $paletteNameArray[] = $altLabel !== '' ? $this->getLabel($altLabel) : '';
         $paletteNameArray[] = $paletteName;
         $fieldName = implode(';', $paletteNameArray);
-        if ($position !== '') {
-            $this->addFieldToPosition($fieldName, $position);
-        } else {
-            $this->fields[] = $fieldName;
-        }
+        PositionHelper::addFieldToPosition($this->fields, $fieldName, $position);
     }
 
     public function removePalette(string $paletteName)
     {
-        $this->removeStringInList($this->getPaletteFieldName($paletteName));
+        StringHelper::removeStringInList($this->fields, $this->getPaletteFieldName($paletteName));
     }
 
     public function getPaletteFieldName(string $paletteName): string
@@ -120,21 +116,17 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     public function addDiv(string $label, string $position = '')
     {
         $fieldName = '--div--;' . $this->getLabel($label);
-        if ($position !== '') {
-            $this->addFieldToPosition($fieldName, $position);
-        } else {
-            $this->fields[] = $fieldName;
-        }
+        PositionHelper::addFieldToPosition($this->fields, $fieldName, $position);
     }
 
     public function removeDivByLabel(string $label)
     {
-        $this->removeStringInList($this->getDivByLabel($label));
+        StringHelper::removeStringInList($this->fields, $this->getDivByLabel($label));
     }
 
     public function removeDivByPosition(int $position)
     {
-        $this->removeStringInList($this->getDivByPosition($position));
+        StringHelper::removeStringInList($this->fields, $this->getDivByPosition($position));
     }
 
     public function getDivByPosition(int $position): string
@@ -210,38 +202,6 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         return array_search($fieldName, $this->fields, true);
     }
 
-    protected function addFieldToPosition(string $fieldName, string $position)
-    {
-        [$direction, ] = GeneralUtility::trimExplode(':', $position);
-        $fieldNameToSearch = str_replace($direction . ':', '', $position);
-        $key = array_search($fieldNameToSearch, $this->fields, true);
-        if ($key !== false) {
-            switch ($direction) {
-                case 'before':
-                    array_splice($this->fields, $key, 0, $fieldName);
-                    break;
-                case 'replace':
-                    array_splice($this->fields, $key, 1, $fieldName);
-                    break;
-                case 'after':
-                    array_splice($this->fields, ++$key, 0, $fieldName);
-                    break;
-            }
-        }
-        $this->resetFieldKeys();
-    }
-
-    protected function resetFieldKeys()
-    {
-        $this->fields = array_values($this->fields);
-    }
-
-    protected function removeStringInList(string $fieldName)
-    {
-        array_splice($this->fields, array_search($fieldName, $this->fields, true), 1);
-        $this->resetFieldKeys();
-    }
-
     protected function beginsWithDiv($value): bool
     {
         return $this->beginsWith($value, '--div--;');
@@ -254,12 +214,12 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function beginsWith($value, string $begin): bool
     {
-        return strpos($value, $begin) === 0;
+        return StringHelper::stringStartsWith($value, $begin);
     }
 
     protected function getLabel(string $label): string
     {
-        if ($this->locallangFile !== '' && strpos($label, 'LANG:') === 0) {
+        if ($this->locallangFile !== '' && StringHelper::stringStartsWith($label, 'LANG:')) {
             return str_replace('LANG:', 'LLL:' . $this->locallangFile . ':', $label);
         }
 
