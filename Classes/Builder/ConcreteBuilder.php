@@ -181,7 +181,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             'showitem' => implode(',', $showItems)
         ];
 
-        if ($position) {
+        if ($position !== '') {
             $this->addPalette($paletteId, $position);
         }
     }
