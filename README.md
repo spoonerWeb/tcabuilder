@@ -22,6 +22,21 @@ For example:
 
 `composer require spooner-web/tcabuilder`
 
+### Composer fails checking out this package
+
+As composer is not able to detect the ZIP archive of a self-hosted GitLab instance,
+there may occur problems when deploying or building a project with this package.
+
+To fix this issue, you need to add the GitLab built-in packagist API into the `repositories` section
+of your project composer.json:
+
+```json
+{
+	"type": "composer",
+	"url": "https://git.spooner.io/api/v4/group/8/-/packages/composer/"
+}
+```
+
 ## Usage
 
 ### General usage
