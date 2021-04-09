@@ -18,6 +18,14 @@ For example:
 1. Compose the field list for the form of a content element or any other record
 1. Change the types of existing definitions
 
+### Introducing TcaCreator in v1.6.0
+
+With the TCA creator you have the possibility to create TCA forms
+from scratch and do not need to think about the configuration of the default fields
+like the `ctrl` section or the default fields in the `columns` section.
+
+More to see in the [Examples Section](#tcacreator)
+
 ## Installation
 
 `composer require spooner-web/tcabuilder`
@@ -62,6 +70,7 @@ Recommendation is to use the `TcaBuilder` in the php files of your `Configuratio
 | `loadConfiguration` | Shorter method to run `setTable`, `setType` and `load` at once | `string` $tableName <br> `string` $typeName |
 | `useLocalLangFile` | Set a locallang file (beginning with `EXT:`) to use in labels | `string` $localLangFile |
 | `saveToTca` | Saves the manipulated configuration to TCA |  |
+| `returnAsArray` | Instead of saving the configuration it returns it directly as array |  |
 
 #### Manipulating types
 
@@ -102,7 +111,7 @@ Recommendation is to use the `TcaBuilder` in the php files of your `Configuratio
 | `after:<item>` | Moves the item after the given item | 
 | `replace:<item>` | Replaces the given item | 
 
-## Examples
+## Examples (TCA builder)
 
 ### Add an own content element
 
@@ -173,4 +182,47 @@ $tcaBuilder
     ->loadConfiguration('tt_content', 'textmedia')
     ->removePalette('headers')
     ->saveToTca();
+```
+
+## <a id="tcacreator" />Examples (Tca Creator)
+
+### Creating TCA configuration for a new table (inside custom extension)
+
+```php
+
+// Returns the default values of ctrl section
+// By default language, version and sorting options are set
+// These options can be unset and additional overridden fields can be set
+$configuration['ctrl'] = \SpoonerWeb\TcaBuilder\TcaCreator::getControlConfiguration(
+    'title',
+    'label'    
+);
+
+// Returns the default columns depending on the ctrl section configuration
+// Example: If ctrl section includes language, this method returns the field configuration
+// for all language fields (sys_language_uid, l10n_parent, l10n_diffsource, l10n_source)
+$configuration['columns'] = \SpoonerWeb\TcaBuilder\TcaCreator::getColumnsConfiguration(
+    $configuration['ctrl'],
+    'tx_extension_domain_model_record',
+    [
+        'title' => [
+            'label' => 'My label',
+            'config' => [
+                'type' => 'input'
+            ]
+        ]
+    ]
+);
+
+// Uses TcaBuilder class to create the configuration for the TCA form
+$configuration['types'][] = \SpoonerWeb\TcaBuilder\TcaCreator::buildTypesConfiguration()
+    ->addDiv('General')
+    ->addField('title')
+    ->addField('subtitle')
+    ->addDiv('Categories')
+    ->addField('categories')
+    ->returnAsArray();
+    
+// Now return TCA configuration
+return $configuration;
 ```
