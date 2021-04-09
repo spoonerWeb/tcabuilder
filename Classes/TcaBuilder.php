@@ -390,4 +390,14 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $this->tcaBuilder->save($resetAfterSave);
     }
+
+    /**
+     * Returns the built configuration as array to include directly
+     *
+     * @return array
+     */
+    public function returnAsArray(): array
+    {
+        return $this->tcaBuilder->returnAsArray();
+    }
 }

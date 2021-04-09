@@ -221,6 +221,18 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
     }
 
+    public function returnAsArray(): array
+    {
+        $fields = array_values(array_filter($this->fields));
+        $typeConfiguration['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
+
+        if ($this->columnsOverrides !== [] || $this->initializeOverrides) {
+            $typeConfiguration['columnsOverrides'] = $this->columnsOverrides;
+        }
+
+        return $typeConfiguration;
+    }
+
     public function useLocalLangFile(string $filePath)
     {
         $this->locallangFile = $filePath;

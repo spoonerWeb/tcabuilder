@@ -1077,4 +1077,31 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             $GLOBALS['TCA']['table']['types']['newType']['showitem']
         );
     }
+
+    /**
+     * @test
+     */
+    public function returnFromArrayReturnsTypeConfigurationAsArray()
+    {
+        $override = [
+            'config' => [
+                'label' => 'Test'
+            ]
+        ];
+        $configuration = $this->tcaBuilder
+            ->addField('field1')
+            ->addField('field2')
+            ->addOverride('field1', $override)
+            ->returnAsArray();
+
+        self::assertEquals(
+            [
+                'showitem' => 'field1,field2',
+                'columnsOverrides' => [
+                    'field1' => $override
+                ]
+            ],
+            $configuration
+        );
+    }
 }
