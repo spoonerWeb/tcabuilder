@@ -74,7 +74,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                     'title' => 'title',
                     'label' => 'label'
                 ],
-                ControlTemplates::BASIC_TEMPLATE,
+                ControlTemplates::BASIC_TEMPLATE
             ),
             $configuration
         );
@@ -101,7 +101,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                     'label' => 'label'
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
-                ControlTemplates::LANGUAGE_TEMPLATE,
+                ControlTemplates::LANGUAGE_TEMPLATE
             ),
             $configuration
         );
@@ -128,7 +128,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                     'label' => 'label'
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
-                ControlTemplates::VERSION_TEMPLATE,
+                ControlTemplates::VERSION_TEMPLATE
             ),
             $configuration
         );
@@ -155,7 +155,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                     'label' => 'label'
                 ],
                 ControlTemplates::BASIC_TEMPLATE,
-                ControlTemplates::SORTING_TEMPLATE,
+                ControlTemplates::SORTING_TEMPLATE
             ),
             $configuration
         );
@@ -185,7 +185,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                     'label' => 'New label',
                     'iconfile' => 'test.png'
                 ],
-                ControlTemplates::BASIC_TEMPLATE,
+                ControlTemplates::BASIC_TEMPLATE
             ),
             $configuration
         );

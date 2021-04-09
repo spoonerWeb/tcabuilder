@@ -14,7 +14,6 @@ namespace SpoonerWeb\TcaBuilder\TcaTemplates;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 class ControlTemplates
 {
     public const BASIC_TEMPLATE = [
