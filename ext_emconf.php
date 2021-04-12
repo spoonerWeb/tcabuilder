@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TCA Builder - create and change TCA in an easy way',
     'description' => 'Utility to easily maintain and create your TCA forms',
-    'version' => '1.6.0',
+    'version' => '1.6.1',
     'category' => 'misc',
     'state' => 'stable',
     'author' => 'Thomas Löffler',
