@@ -78,11 +78,7 @@ class TcaCreator
         }
 
         if ($controlConfiguration['transOrigPointerField']) {
-            $columns[$controlConfiguration['transOrigPointerField']] = str_replace(
-                '###TCABUILDER_TABLE###',
-                $tableName,
-                ColumnsTemplates::LANGUAGE_PARENT_FIELD_TEMPLATE
-            );
+            $columns[$controlConfiguration['transOrigPointerField']] = ColumnsTemplates::getLanguageParentColumnWithReplacedTableName($tableName);
         }
 
         if ($controlConfiguration['transOrigDiffSourceField']) {

@@ -205,11 +205,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             [
                 'hidden' => ColumnsTemplates::DISABLED_TEMPLATE,
                 'sys_language_uid' => ColumnsTemplates::LANGUAGE_FIELD_TEMPLATE,
-                'l10n_parent' => str_replace(
-                    '###TCABUILDER_TABLE###',
-                    'tx_table',
-                    ColumnsTemplates::LANGUAGE_PARENT_FIELD_TEMPLATE
-                ),
+                'l10n_parent' => ColumnsTemplates::getLanguageParentColumnWithReplacedTableName('tx_table'),
                 'l10n_diffsource' => ColumnsTemplates::LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE,
                 'l10n_source' => ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE
             ],
@@ -239,11 +235,7 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             [
                 'hidden' => ColumnsTemplates::DISABLED_TEMPLATE,
                 'sys_language_uid' => ColumnsTemplates::LANGUAGE_FIELD_TEMPLATE,
-                'l10n_parent' => str_replace(
-                    '###TCABUILDER_TABLE###',
-                    'tx_table',
-                    ColumnsTemplates::LANGUAGE_PARENT_FIELD_TEMPLATE
-                ),
+                'l10n_parent' => ColumnsTemplates::getLanguageParentColumnWithReplacedTableName('tx_table'),
                 'l10n_diffsource' => ColumnsTemplates::LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE,
                 'l10n_source' => ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE,
                 'title' => [
@@ -254,6 +246,30 @@ class TcaCreatorTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                 ],
             ],
             $columns
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function buildColumnsConfigurationReplacesTableInLanguageParentField()
+    {
+        $tableName = 'tx_table';
+        $columns = TcaCreator::getColumnsConfiguration(
+            TcaCreator::getControlConfiguration(
+                'title',
+                'label',
+                [],
+                true,
+                false,
+                false
+            ),
+            'tx_table'
+        );
+
+        self::assertEquals(
+            $tableName,
+            $columns['l10n_parent']['config']['foreign_table']
         );
     }
 

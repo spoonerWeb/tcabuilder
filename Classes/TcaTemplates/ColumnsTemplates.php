@@ -72,4 +72,18 @@ class ColumnsTemplates
             'default' => 0,
         ]
     ];
+
+    public static function getLanguageParentColumnWithReplacedTableName(string $tableName): array
+    {
+        $config = self::LANGUAGE_PARENT_FIELD_TEMPLATE;
+        foreach (['foreign_table', 'foreign_table_where'] as $field) {
+            $config['config'][$field] = str_replace(
+                '###TCABUILDER_TABLE###',
+                $tableName,
+                $config['config'][$field]
+            );
+        }
+
+        return $config;
+    }
 }
