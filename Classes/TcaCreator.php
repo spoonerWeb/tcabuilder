@@ -98,8 +98,8 @@ class TcaCreator
 
     public static function buildTypesConfiguration(): TcaBuilder
     {
-        $tcaBuilder = new TcaBuilder()->reset();
+        $tcaBuilder = new TcaBuilder();
 
-        return $tcaBuilder;
+        return $tcaBuilder->reset();
     }
 }
