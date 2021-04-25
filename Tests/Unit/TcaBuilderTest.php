@@ -14,6 +14,7 @@ namespace SpoonerWeb\TcaBuilder\Tests\Unit;
  * The TYPO3 project - inspiring people to share!
  */
 
+use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 use SpoonerWeb\TcaBuilder\TcaBuilder;
 
 class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
@@ -51,7 +52,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->reset()
             ->saveToTca();
 
-        self::assertNull($GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertNull($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -78,7 +79,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField($field)
             ->saveToTca();
 
-        self::assertEquals($field, $GLOBALS['TCA'][$table]['types'][$type]['showitem']);
+        self::assertEquals($field, $GLOBALS['TCA'][$table][ConcreteBuilder::TYPES_KEYWORD][$type][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -91,7 +92,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('secondField')
             ->saveToTca();
 
-        self::assertEquals('firstField,secondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('firstField,secondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
 
         $this->tcaBuilder
             ->setTable('table')
@@ -100,7 +101,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('thirdField')
             ->saveToTca();
 
-        self::assertEquals('firstField,secondField,thirdField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('firstField,secondField,thirdField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -115,7 +116,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'newField;LLL:EXT:my_ext/Resources/Private/Language/locallang.xlf:newField',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -130,15 +131,15 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('test')
             ->saveToTca();
 
-        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+        self::assertCount(1, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
 
         $this->tcaBuilder
             ->reset()
             ->setTable('table')
             ->removeType();
 
-        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
-        self::assertNotEmpty($GLOBALS['TCA']['table']['types']['type']);
+        self::assertCount(1, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
+        self::assertNotEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']);
     }
 
     /**
@@ -152,7 +153,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('test')
             ->saveToTca();
 
-        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+        self::assertCount(1, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
 
         $this->tcaBuilder
             ->reset()
@@ -160,8 +161,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->setType('type')
             ->removeType();
 
-        self::assertCount(0, $GLOBALS['TCA']['table']['types']);
-        self::assertEmpty($GLOBALS['TCA']['table']['types']['type']);
+        self::assertCount(0, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
+        self::assertEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']);
     }
 
     /**
@@ -175,15 +176,15 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('test')
             ->saveToTca();
 
-        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+        self::assertCount(1, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
 
         $this->tcaBuilder
             ->reset()
             ->setTable('table')
             ->removeType('type');
 
-        self::assertCount(0, $GLOBALS['TCA']['table']['types']);
-        self::assertEmpty($GLOBALS['TCA']['table']['types']['type']);
+        self::assertCount(0, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
+        self::assertEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']);
     }
 
     /**
@@ -197,15 +198,15 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('test')
             ->saveToTca();
 
-        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
+        self::assertCount(1, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
 
         $this->tcaBuilder
             ->reset()
             ->setTable('table')
             ->removeType('nonExistingType');
 
-        self::assertCount(1, $GLOBALS['TCA']['table']['types']);
-        self::assertNotEmpty($GLOBALS['TCA']['table']['types']['type']);
+        self::assertCount(1, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]);
+        self::assertNotEmpty($GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']);
     }
 
     /**
@@ -216,7 +217,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
         $this->tcaBuilder
             ->saveToTca();
 
-        self::assertEquals('', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -228,7 +229,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newField')
             ->saveToTca();
 
-        self::assertEquals('newField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -240,7 +241,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newField', '', 'Label')
             ->saveToTca();
 
-        self::assertEquals('newField;Label', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField;Label', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -253,8 +254,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newField', '', '', $overridesConfiguration)
             ->saveToTca();
 
-        self::assertEquals('newField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
-        self::assertEquals($overridesConfiguration, $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']['newField']);
+        self::assertEquals('newField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
+        self::assertEquals($overridesConfiguration, $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']['columnsOverrides']['newField']);
     }
 
     /**
@@ -267,7 +268,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newSecondField')
             ->saveToTca();
 
-        self::assertEquals('newField,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -280,7 +281,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newSecondField', 'before:newField')
             ->saveToTca();
 
-        self::assertEquals('newSecondField,newField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newSecondField,newField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -293,7 +294,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newSecondField', 'before:nonExistingField')
             ->saveToTca();
 
-        self::assertEquals('newField,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -307,7 +308,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addField('newThirdField', 'before:newField')
             ->saveToTca();
 
-        self::assertEquals('newSecondField,newThirdField,newField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newSecondField,newThirdField,newField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -320,7 +321,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->removeField('newField')
             ->saveToTca();
 
-        self::assertEquals('', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -333,7 +334,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->removeField('nonExistingField')
             ->saveToTca();
 
-        self::assertEquals('newField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -348,7 +349,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->moveField('newThirdField', 'after:newField')
             ->saveToTca();
 
-        self::assertEquals('newField,newThirdField,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField,newThirdField,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -363,7 +364,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->moveField('newThirdField', 'replace:newField')
             ->saveToTca();
 
-        self::assertEquals('newThirdField,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newThirdField,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -378,7 +379,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->moveField('newThirdField', 'before:newSecondField', 'newLabel')
             ->saveToTca();
 
-        self::assertEquals('newField,newThirdField;newLabel,newSecondField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField,newThirdField;newLabel,newSecondField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -393,7 +394,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->moveField('newThirdField', 'before:nonExistingField', 'newLabel')
             ->saveToTca();
 
-        self::assertEquals('newField,newSecondField,newThirdField', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals('newField,newSecondField,newThirdField', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -405,7 +406,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addPalette('newPalette')
             ->saveToTca();
 
-        self::assertEquals('--palette--;;newPalette', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals(ConcreteBuilder::PALETTE_MARKER . ';;newPalette', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -417,7 +418,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addPalette('newPalette', '', 'newLabel')
             ->saveToTca();
 
-        self::assertEquals('--palette--;newLabel;newPalette', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals(ConcreteBuilder::PALETTE_MARKER . ';newLabel;newPalette', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -429,7 +430,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addPalette('newPalette', '', 'LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel')
             ->saveToTca();
 
-        self::assertEquals('--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newPalette', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals(ConcreteBuilder::PALETTE_MARKER . ';LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newPalette', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -442,7 +443,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addPalette('newSecondPalette')
             ->saveToTca();
 
-        self::assertEquals('--palette--;;newPalette,--palette--;;newSecondPalette', $GLOBALS['TCA']['table']['types']['type']['showitem']);
+        self::assertEquals(ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette', $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]);
     }
 
     /**
@@ -453,12 +454,12 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
         $this->tcaBuilder
             ->addPalette('newPalette')
             ->addPalette('newSecondPalette')
-            ->addPalette('newThirdPalette', 'before:--palette--;;newSecondPalette')
+            ->addPalette('newThirdPalette', 'before:' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette')
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -470,12 +471,12 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
         $this->tcaBuilder
             ->addPalette('newPalette')
             ->addPalette('newSecondPalette')
-            ->addPalette('newThirdPalette', 'replace:--palette--;;newSecondPalette')
+            ->addPalette('newThirdPalette', 'replace:' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette')
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -487,12 +488,12 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
         $this->tcaBuilder
             ->addPalette('newPalette')
             ->addPalette('newSecondPalette', '', 'LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel')
-            ->addPalette('newThirdPalette', 'before:--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette')
+            ->addPalette('newThirdPalette', 'before:' . ConcreteBuilder::PALETTE_MARKER . ';LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette')
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette,' . ConcreteBuilder::PALETTE_MARKER . ';LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -508,8 +509,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -525,8 +526,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette,' . ConcreteBuilder::PALETTE_MARKER . ';LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -542,8 +543,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;newLabel;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette,' . ConcreteBuilder::PALETTE_MARKER . ';newLabel;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -559,8 +560,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -576,8 +577,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -590,12 +591,12 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addPalette('newPalette')
             ->addPalette('newSecondPalette')
             ->addPalette('newThirdPalette')
-            ->movePalette('newSecondPalette', 'after:--palette--;;newThirdPalette')
+            ->movePalette('newSecondPalette', 'after:' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette')
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newThirdPalette,--palette--;;newSecondPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -608,12 +609,12 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addPalette('newPalette')
             ->addPalette('newSecondPalette')
             ->addPalette('newThirdPalette')
-            ->movePalette('newSecondPalette', 'after:--palette--;;nonExistingPalette')
+            ->movePalette('newSecondPalette', 'after:' . ConcreteBuilder::PALETTE_MARKER . ';;nonExistingPalette')
             ->saveToTca();
 
         self::assertEquals(
-            '--palette--;;newPalette,--palette--;;newSecondPalette,--palette--;;newThirdPalette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;newPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newSecondPalette,' . ConcreteBuilder::PALETTE_MARKER . ';;newThirdPalette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -627,8 +628,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;newDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';newDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -644,8 +645,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;positionDiv,--div--;newDiv,--div--;secondDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';positionDiv,' . ConcreteBuilder::DIV_MARKER . ';newDiv,' . ConcreteBuilder::DIV_MARKER . ';secondDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -661,8 +662,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;positionDiv,--div--;secondDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';positionDiv,' . ConcreteBuilder::DIV_MARKER . ';secondDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -678,8 +679,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;newSecondDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';newSecondDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -695,8 +696,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;newSecondDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';newSecondDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -712,8 +713,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;newDiv,--div--;newSecondDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';newDiv,' . ConcreteBuilder::DIV_MARKER . ';newSecondDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -729,8 +730,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            '--div--;newDiv,--div--;newSecondDiv',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::DIV_MARKER . ';newDiv,' . ConcreteBuilder::DIV_MARKER . ';newSecondDiv',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -744,7 +745,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addDiv('newSecondDiv');
 
         self::assertEquals(
-            '--div--;newDiv',
+            ConcreteBuilder::DIV_MARKER . ';newDiv',
             $this->tcaBuilder->getDivString('newDiv')
         );
     }
@@ -759,7 +760,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->addDiv('newSecondDiv');
 
         self::assertEquals(
-            '--div--;newSecondDiv',
+            ConcreteBuilder::DIV_MARKER . ';newSecondDiv',
             $this->tcaBuilder->getDivString(1)
         );
     }
@@ -813,7 +814,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             )
             ->saveToTca();
 
-        self::assertEquals([$field => $config], $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']);
+        self::assertEquals([$field => $config], $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']['columnsOverrides']);
     }
 
     /**
@@ -832,8 +833,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
         )->saveToTca();
 
         self::assertEquals(
-            ['label' => 'customPaletteLabel', 'showitem' => 'header,bodytext,hidden'],
-            $GLOBALS['TCA']['table']['palettes']['custom']
+            ['label' => 'customPaletteLabel', ConcreteBuilder::SHOWITEM_KEYWORD => 'header,bodytext,hidden'],
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom']
         );
     }
 
@@ -858,13 +859,13 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            ['label' => 'customPaletteLabel', 'showitem' => 'header,bodytext,hidden'],
-            $GLOBALS['TCA']['table']['palettes']['custom']
+            ['label' => 'customPaletteLabel', ConcreteBuilder::SHOWITEM_KEYWORD => 'header,bodytext,hidden'],
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom']
         );
 
         self::assertEquals(
-            'field1,--palette--;;custom,field2',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            'field1,' . ConcreteBuilder::PALETTE_MARKER . ';;custom,field2',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -880,7 +881,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field2,field1',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -897,11 +898,11 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field1,field2,field3',
-            $GLOBALS['TCA']['table']['palettes']['custom']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
-            '--palette--;;custom',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;custom',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -919,11 +920,11 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field1,field3,field5',
-            $GLOBALS['TCA']['table']['palettes']['custom']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
-            '--palette--;;custom',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;custom',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -940,11 +941,11 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field2',
-            $GLOBALS['TCA']['table']['palettes']['custom']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
-            '--palette--;;custom',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;custom',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -961,11 +962,11 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             '',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
             [],
-            $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']['columnsOverrides']
         );
     }
 
@@ -984,11 +985,11 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field3,field5',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
             ['field5' => ['config' => 'input']],
-            $GLOBALS['TCA']['table']['types']['type']['columnsOverrides']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type']['columnsOverrides']
         );
     }
 
@@ -1005,11 +1006,11 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             '',
-            $GLOBALS['TCA']['table']['palettes']['palette']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['palette'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
-            '--palette--;;palette',
-            $GLOBALS['TCA']['table']['types']['type']['showitem']
+            ConcreteBuilder::PALETTE_MARKER . ';;palette',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -1029,8 +1030,8 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             ->saveToTca();
 
         self::assertEquals(
-            $GLOBALS['TCA']['table']['types']['type'],
-            $GLOBALS['TCA']['table']['types']['newType']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'],
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['newType']
         );
     }
 
@@ -1052,7 +1053,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field3,field4,field5',
-            $GLOBALS['TCA']['table']['types']['newType']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['newType'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -1074,7 +1075,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             'field5',
-            $GLOBALS['TCA']['table']['types']['newType']['showitem']
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['newType'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 
@@ -1096,7 +1097,7 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
 
         self::assertEquals(
             [
-                'showitem' => 'field1,field2',
+                ConcreteBuilder::SHOWITEM_KEYWORD => 'field1,field2',
                 'columnsOverrides' => [
                     'field1' => $override
                 ]

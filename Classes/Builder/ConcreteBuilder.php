@@ -20,6 +20,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 {
+    public const TYPES_KEYWORD = 'types';
+    public const SHOWITEM_KEYWORD = 'showitem';
+    public const PALETTES_KEYWORD = 'palettes';
+    public const DIV_MARKER = '--div--';
+    public const PALETTE_MARKER = '--palette--';
+
     protected $table = '';
 
     protected $selectedType = '';
@@ -73,7 +79,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         if ($type) {
-            unset($GLOBALS['TCA'][$this->table]['types'][$type]);
+            unset($GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$type]);
         }
     }
 
@@ -109,7 +115,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function addPalette(string $paletteName, string $position = '', string $altLabel = '')
     {
-        $paletteNameArray[] = '--palette--';
+        $paletteNameArray[] = self::PALETTE_MARKER;
         $paletteNameArray[] = $altLabel !== '' ? $this->getLabel($altLabel) : '';
         $paletteNameArray[] = $paletteName;
         $fieldName = implode(';', $paletteNameArray);
@@ -137,7 +143,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function addDiv(string $label, string $position = '')
     {
-        $fieldName = '--div--;' . $this->getLabel($label);
+        $fieldName = self::DIV_MARKER . ';' . $this->getLabel($label);
         PositionHelper::addFieldToPosition($this->fields, $fieldName, $position);
     }
 
@@ -162,11 +168,11 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function getDivByLabel(string $label): string
     {
-        if (!$this->doesFieldExist('--div--;' . $this->getLabel($label))) {
+        if (!$this->doesFieldExist(self::DIV_MARKER . ';' . $this->getLabel($label))) {
             return '';
         }
 
-        return '--div--;' . $this->getLabel($label);
+        return self::DIV_MARKER . ';' . $this->getLabel($label);
     }
 
     public function addColumnsOverrides(string $fieldName, array $override)
@@ -178,7 +184,7 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
     {
         $this->customPalettes[$paletteId] = [
             'label' => $label,
-            'showitem' => implode(',', $showItems)
+            self::SHOWITEM_KEYWORD => implode(',', $showItems)
         ];
 
         if ($position !== '') {
@@ -188,15 +194,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function setFieldsForPalette(string $paletteId, array $fields)
     {
-        $this->customPalettes[$paletteId]['showitem'] = implode(',', $fields);
+        $this->customPalettes[$paletteId][self::SHOWITEM_KEYWORD] = implode(',', $fields);
     }
 
     public function load()
     {
-        $fields = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'];
+        $loadedFields = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType][self::SHOWITEM_KEYWORD];
 
-        $this->fields = GeneralUtility::trimExplode(',', $fields);
-        $this->columnsOverrides = $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] ?? null;
+        $this->fields = GeneralUtility::trimExplode(',', $loadedFields);
+        $this->columnsOverrides = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType]['columnsOverrides'] ?? null;
     }
 
     public function save(bool $resetAfterSave = true)
@@ -205,15 +211,15 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
             return;
         }
 
-        $fields = array_values(array_filter($this->fields));
-        $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
+        $fieldsToSave = array_values(array_filter($this->fields));
+        $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType][self::SHOWITEM_KEYWORD] = count($fieldsToSave) === 1 ? $fieldsToSave[0] : implode(',', $fieldsToSave);
 
         if ($this->columnsOverrides !== [] || $this->initializeOverrides) {
-            $GLOBALS['TCA'][$this->table]['types'][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
+            $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType]['columnsOverrides'] = $this->columnsOverrides;
         }
 
         foreach ($this->customPalettes as $customPaletteId => $customPaletteConfiguration) {
-            $GLOBALS['TCA'][$this->table]['palettes'][$customPaletteId] = $customPaletteConfiguration;
+            $GLOBALS['TCA'][$this->table][self::PALETTES_KEYWORD][$customPaletteId] = $customPaletteConfiguration;
         }
 
         if ($resetAfterSave) {
@@ -223,8 +229,8 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     public function returnAsArray(): array
     {
-        $fields = array_values(array_filter($this->fields));
-        $typeConfiguration['showitem'] = count($fields) === 1 ? $fields[0] : implode(',', $fields);
+        $fieldsToSave = array_values(array_filter($this->fields));
+        $typeConfiguration[self::SHOWITEM_KEYWORD] = count($fieldsToSave) === 1 ? $fieldsToSave[0] : implode(',', $fieldsToSave);
 
         if ($this->columnsOverrides !== [] || $this->initializeOverrides) {
             $typeConfiguration['columnsOverrides'] = $this->columnsOverrides;
@@ -245,12 +251,12 @@ class ConcreteBuilder implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function beginsWithDiv($value): bool
     {
-        return $this->beginsWith($value, '--div--;');
+        return $this->beginsWith($value, self::DIV_MARKER . ';');
     }
 
     protected function beginsWithPalette($value): bool
     {
-        return $this->beginsWith($value, '--palette--;');
+        return $this->beginsWith($value, self::PALETTE_MARKER . ';');
     }
 
     protected function beginsWith($value, string $begin): bool

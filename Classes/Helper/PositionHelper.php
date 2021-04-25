@@ -39,6 +39,7 @@ class PositionHelper
                 case 'after':
                     array_splice($fields, ++$key, 0, $fieldName);
                     break;
+                default:
             }
         }
 
