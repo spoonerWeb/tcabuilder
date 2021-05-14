@@ -28,7 +28,23 @@ More to see in the [Examples Section](#tcacreator)
 
 ## Installation
 
+### Installation via composer
+
 `composer require spooner-web/tcabuilder`
+
+> :warning: **In a composer install, the package won't be in typo3conf/ext folder but in vendor**
+
+### Installation via classic mode
+
+1. Head to https://extensions.typo3.org/extension/tcabuilder
+1. Download the ZIP file
+1. Upload it to your TYPO3 instance using non-composer mode
+
+### Installation via Extension Manager
+
+1. Update your extension list
+1. Search for "tcabuilder"
+1. Install
 
 ### Composer fails checking out this package
 
