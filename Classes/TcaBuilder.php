@@ -113,7 +113,7 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = []): TcaBuilder
     {
-        if ($position && !$this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $position)[1])) {
+        if ($position && $this->tcaBuilder->doesFieldExist(GeneralUtility::trimExplode(':', $position)[1]) === false) {
             $this->tcaBuilder->addField($fieldName, '', $altLabel, $columnsOverrides);
         } else {
             $this->tcaBuilder->addField($fieldName, $position, $altLabel, $columnsOverrides);
