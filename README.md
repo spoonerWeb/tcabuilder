@@ -85,7 +85,7 @@ Recommendation is to use the `TcaBuilder` in the php files of your `Configuratio
 | `load` | Loads configuration if it's an existing type |  |
 | `loadConfiguration` | Shorter method to run `setTable`, `setType` and `load` at once | `string` $tableName <br> `string` $typeName |
 | `useLocalLangFile` | Set a locallang file (beginning with `EXT:`) to use in labels | `string` $localLangFile |
-| `saveToTca` | Saves the manipulated configuration to TCA | `bool` $resetAfterSave(true) |
+| `saveToTca` | Saves the manipulated configuration to TCA | `bool` $resetAfterSave (optional) |
 | `returnAsArray` | Instead of saving the configuration it returns it directly as array |  |
 
 #### Manipulating types
