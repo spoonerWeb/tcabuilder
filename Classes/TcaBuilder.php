@@ -396,8 +396,12 @@ class TcaBuilder implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return array
      */
-    public function returnAsArray(): array
+    public function returnAsArray(bool $resetAfterReturn = false): array
     {
-        return $this->tcaBuilder->returnAsArray();
+        $config = $this->tcaBuilder->returnAsArray();
+        if ($resetAfterReturn) {
+            $this->tcaBuilder->reset();
+        }
+        return $config;
     }
 }
