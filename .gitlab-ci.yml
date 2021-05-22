@@ -150,6 +150,8 @@ stages:
   script:
     - >
       if [ -n "$CI_COMMIT_TAG" ] && [ -n "$TYPO3_API_TOKEN" ] && [ -n "$TYPO3_EXTENSION_KEY" ]; then
+        echo -e "Set version to ${CI_COMMIT_TAG} in ext_emconf.php"
+        /tmp/vendor/bin/tailor set-version --no-docs -- $CI_COMMIT_TAG
         echo -e "Preparing upload of release ${CI_COMMIT_TAG} to TER\n"
         # Cleanup before we upload
         git reset --hard HEAD && git clean -fx
