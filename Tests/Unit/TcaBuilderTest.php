@@ -1145,7 +1145,6 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
             )
             ->saveToTca();
 
-
         self::assertEquals(
             '--palette--;;general,header;New Header,subheader;New Subheader,bodytext',
             $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
