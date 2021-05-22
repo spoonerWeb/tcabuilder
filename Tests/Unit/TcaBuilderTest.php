@@ -314,6 +314,23 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
     /**
      * @test
      */
+    public function addTwoFieldsWithAltLabelReturnsCorrectFieldsWithAltLabels()
+    {
+        $this->tcaBuilder
+            ->addField('newField')
+            ->addField('newSecondField', 'after:newField', 'Second Field')
+            ->addField('newThirdField', 'after:newSecondField', 'Third Field')
+            ->saveToTca();
+
+        self::assertEquals(
+            'newField,newSecondField;Second Field,newThirdField;Third Field',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+    }
+
+    /**
+     * @test
+     */
     public function removeFieldWithStringRemovesField()
     {
         $this->tcaBuilder
@@ -1103,6 +1120,35 @@ class TcaBuilderTest extends \Nimut\TestingFramework\TestCase\AbstractTestCase
                 ]
             ],
             $configuration
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function copyFromTextTypeAndMoveHeaderFieldAndUseAltLabelReturnsCorrectFieldsOrderAndLabels()
+    {
+        $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['text'][ConcreteBuilder::SHOWITEM_KEYWORD] = '--palette--;;general,--palette--;headers,bodytext';
+
+        $this->tcaBuilder
+            ->copyFromType('text')
+            ->removePalette('headers')
+            ->addField(
+                'header',
+                'after:' . $this->tcaBuilder->getPaletteString('general'),
+                'New Header'
+            )
+            ->addField(
+                'subheader',
+                'after:header;New Header',
+                'New Subheader'
+            )
+            ->saveToTca();
+
+
+        self::assertEquals(
+            '--palette--;;general,header;New Header,subheader;New Subheader,bodytext',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
 }
