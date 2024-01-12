@@ -89,21 +89,11 @@ stages:
       junit: build/*-report.xml
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
-"Unit Tests with PHP 8.1":
+"Unit Tests with PHP $PHP_VERSION":
   <<: *unit_tests
-  variables:
-    PHP_VERSION: '8.1'
-
-"Unit Tests with PHP 8.2":
-  <<: *unit_tests
-  variables:
-    PHP_VERSION: '8.2'
-
-"Unit Tests with PHP 8.3":
-  <<: *unit_tests
-  variables:
-    PHP_VERSION: '8.3'
-  allow_failure: true
+  parallel:
+    matrix:
+      - PHP_VERSION: [ "7.4", "8.0", "8.1", "8.2", "8.3" ]
 
 "Upload to TER":
   stage: release

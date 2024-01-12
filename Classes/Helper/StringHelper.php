@@ -32,7 +32,7 @@ class StringHelper
 
     public static function stringStartsWith(string $string, string $startsWith): bool
     {
-        return str_starts_with($string, $startsWith);
+        return strpos($string, $startsWith) === 0;
     }
 
     public static function stringIsFieldName(string $field, string $fieldName): bool
