@@ -9,7 +9,6 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Thomas Löffler',
     'author_email' => 'loeffler@spooner-web.de',
     'author_company' => 'Spooner Web',
-    'clearCacheOnLoad' => true,
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0 - 12.4.99',
