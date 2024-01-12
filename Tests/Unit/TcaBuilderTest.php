@@ -1205,4 +1205,27 @@ class TcaBuilderTest extends TestCase
             $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['type'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
     }
+
+    /**
+     * @test
+     */
+    public function removalOfCorrectField()
+    {
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'removal')
+            ->addField('header')
+            ->addField('email_information')
+            ->addField('email')
+            ->saveToTca();
+
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'removal')
+            ->removeField('email')
+            ->saveToTca();
+
+        self::assertEquals(
+            'header,email_information',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['removal'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+    }
 }

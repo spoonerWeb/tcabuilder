@@ -18,18 +18,29 @@ class StringHelper
 {
     public static function removeStringInList(array &$fields, string $fieldName): void
     {
-        array_splice(
-            $fields,
-            self::findFieldVariantInList($fieldName, $fields),
-            1
-        );
+        $positionOfField = self::findFieldVariantInList($fieldName, $fields);
+        if ($positionOfField !== null) {
+            array_splice(
+                $fields,
+                self::findFieldVariantInList($fieldName, $fields),
+                1
+            );
+        }
 
         ArrayHelper::resetKeys($fields);
     }
 
     public static function stringStartsWith(string $string, string $startsWith): bool
     {
-        return strpos($string, $startsWith) === 0;
+        return str_starts_with($string, $startsWith);
+    }
+
+    public static function stringIsFieldName(string $field, string $fieldName): bool
+    {
+        $fieldParts = explode(';', $field);
+        $fieldNameOfField = array_shift($fieldParts);
+
+        return $fieldName === $fieldNameOfField;
     }
 
     public static function removeLabelFromFieldName(string $fieldName): string
@@ -44,7 +55,7 @@ class StringHelper
 
     public static function findFieldVariantInList(string $fieldName, array $fields): ?int
     {
-        $pattern = '/' . preg_quote($fieldName, '/') . '(;\w?)?/';
+        $pattern = '/' . preg_quote($fieldName, '/') . '(;\w+)?$/';
         $matches = preg_grep($pattern, $fields);
 
         return array_key_first($matches);

@@ -107,7 +107,7 @@ class ConcreteBuilder
     public function removeField(string $fieldName)
     {
         foreach ($this->fields as $field) {
-            if (StringHelper::stringStartsWith($field, $fieldName)) {
+            if (StringHelper::stringStartsWith($field, $fieldName) && StringHelper::stringIsFieldName($field, $fieldName)) {
                 StringHelper::removeStringInList($this->fields, $field);
             }
         }
