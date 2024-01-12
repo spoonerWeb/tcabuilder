@@ -80,6 +80,11 @@ stages:
   <<: *unit_tests
   variables:
     PHP_VERSION: '8.2'
+
+"Unit Tests with PHP 8.3":
+  <<: *unit_tests
+  variables:
+    PHP_VERSION: '8.3'
   allow_failure: true
 
 "Upload to TER":
