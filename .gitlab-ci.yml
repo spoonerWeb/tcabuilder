@@ -1,6 +1,8 @@
 include:
-  - remote: 'https://git.spooner.io/ci-templates/gitlab-anybadge-creator/-/raw/main/anybadges.yml'
-  - remote: 'https://git.spooner.io/ci-templates/composer-packages/-/raw/main/composer-packages.yml'
+  - project: 'ci-templates/gitlab-anybadge-creator'
+    file: 'anybadges.yml'
+  - project: 'ci-templates/composer-packages'
+    file: 'composer-packages.yml'
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
