@@ -21,6 +21,9 @@ stages:
   image: ekreative/php-cs-fixer:3
   script:
     - php-cs-fixer fix --dry-run --config=.Build/php-cs-fixer.php --diff
+  only:
+    changes:
+      - "**/*.php"
 
 "PHP Static Analyzer":
   stage: test
@@ -33,6 +36,9 @@ stages:
   script:
     - composer install --ignore-platform-reqs
     - /tmp/vendor/bin/phpstan analyse -l 4 -c .Build/phpstan.neon
+  only:
+    changes:
+      - "**/*.php"
 
 "PHP Rector Analyzer":
   stage: test
@@ -47,6 +53,9 @@ stages:
     - docker-php-ext-install intl
   script:
     - vendor/bin/rector process --config .Build/rector.php -n
+  only:
+    changes:
+      - "**/*.php"
 
 "Create Badge":
   stage: badges
@@ -59,6 +68,9 @@ stages:
   image: php:$PHP_VERSION
   script:
     - find . -not -path "./vendor/*" -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+  only:
+    changes:
+      - "**/*.php"
 
 "Linting with PHP $PHP_VERSION":
   <<: *lint_tests
@@ -83,6 +95,9 @@ stages:
     reports:
       junit: build/*-report.xml
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  only:
+    changes:
+      - "**/*.php"
 
 "Unit Tests with PHP $PHP_VERSION":
   <<: *unit_tests
