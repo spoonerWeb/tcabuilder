@@ -60,11 +60,6 @@ stages:
   script:
     - find . -not -path "./vendor/*" -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
 
-"Linting with PHP 7.4":
-  <<: *lint_tests
-  variables:
-    PHP_VERSION: '7.4'
-
 "Linting with PHP $PHP_VERSION":
   <<: *lint_tests
   parallel:
@@ -93,7 +88,7 @@ stages:
   <<: *unit_tests
   parallel:
     matrix:
-      - PHP_VERSION: [ "7.4", "8.0", "8.1", "8.2", "8.3" ]
+      - PHP_VERSION: [ "8.1", "8.2", "8.3" ]
 
 "Upload to TER":
   stage: release
