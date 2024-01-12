@@ -10,6 +10,7 @@ cache:
     - vendor/
 
 stages:
+  - lint
   - test
   - packages
   - badges
@@ -52,6 +53,37 @@ stages:
   script:
     - latest_version=$(git describe --abbrev=0)
     - anybadge -l "Latest Version" -v $latest_version -f latestVersion.svg -c blue
+
+.lint: &lint_tests
+  stage: lint
+  image: php:$PHP_VERSION
+  script:
+    - find . -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+
+"Linting with PHP 7.4":
+  <<: *lint_tests
+  variables:
+    PHP_VERSION: '7.4'
+
+"Linting with PHP 8.0":
+  <<: *lint_tests
+  variables:
+    PHP_VERSION: '8.0'
+
+"Linting with PHP 8.1":
+  <<: *lint_tests
+  variables:
+    PHP_VERSION: '8.1'
+
+"Linting with PHP 8.2":
+  <<: *lint_tests
+  variables:
+    PHP_VERSION: '8.2'
+
+"Linting with PHP 8.3":
+  <<: *lint_tests
+  variables:
+    PHP_VERSION: '8.3'
 
 .unit_tests: &unit_tests
   stage: test
