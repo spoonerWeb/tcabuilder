@@ -72,7 +72,7 @@ stages:
     changes:
       - "**/*.php"
 
-"Linting with PHP":
+"Linting with PHP $PHP_VERSION":
   <<: *lint_tests
   parallel:
     matrix:
@@ -99,7 +99,7 @@ stages:
     changes:
       - "**/*.php"
 
-"Unit Tests with PHP":
+"Unit Tests with PHP $PHP_VERSION":
   <<: *unit_tests
   parallel:
     matrix:
