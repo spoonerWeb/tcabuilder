@@ -40,7 +40,7 @@ class ConcreteBuilder
 
     protected $locallangFile = '';
 
-    public function reset()
+    public function reset(): void
     {
         $this->table = '';
         $this->selectedType = '';
@@ -50,14 +50,14 @@ class ConcreteBuilder
         $this->locallangFile = '';
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->fields = [];
         $this->columnsOverrides = [];
         $this->initializeOverrides = true;
     }
 
-    public function setTable(string $table)
+    public function setTable(string $table): void
     {
         $this->table = $table;
     }
@@ -67,12 +67,12 @@ class ConcreteBuilder
         return $this->table;
     }
 
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         $this->selectedType = $type;
     }
 
-    public function removeType(string $type = '')
+    public function removeType(string $type = ''): void
     {
         if ($type === '') {
             $type = $this->selectedType;
@@ -83,7 +83,7 @@ class ConcreteBuilder
         }
     }
 
-    public function copyFromType(string $type)
+    public function copyFromType(string $type): void
     {
         $saveCurrentType = $this->selectedType;
         $this->setType($type);
@@ -91,7 +91,7 @@ class ConcreteBuilder
         $this->setType($saveCurrentType);
     }
 
-    public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = [])
+    public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = []): void
     {
         if ($altLabel !== '') {
             $fieldName .= ';' . $this->getLabel($altLabel);
@@ -104,7 +104,7 @@ class ConcreteBuilder
         }
     }
 
-    public function removeField(string $fieldName)
+    public function removeField(string $fieldName): void
     {
         foreach ($this->fields as $field) {
             if (StringHelper::stringStartsWith($field, $fieldName) && StringHelper::stringIsFieldName($field, $fieldName)) {
@@ -113,7 +113,7 @@ class ConcreteBuilder
         }
     }
 
-    public function addPalette(string $paletteName, string $position = '', string $altLabel = '')
+    public function addPalette(string $paletteName, string $position = '', string $altLabel = ''): void
     {
         $paletteNameArray[] = self::PALETTE_MARKER;
         $paletteNameArray[] = $altLabel !== '' ? $this->getLabel($altLabel) : '';
@@ -122,7 +122,7 @@ class ConcreteBuilder
         PositionHelper::addFieldToPosition($this->fields, $fieldName, $position);
     }
 
-    public function removePalette(string $paletteName)
+    public function removePalette(string $paletteName): void
     {
         StringHelper::removeStringInList($this->fields, $this->getPaletteFieldName($paletteName));
     }
@@ -141,18 +141,18 @@ class ConcreteBuilder
         return '';
     }
 
-    public function addDiv(string $label, string $position = '')
+    public function addDiv(string $label, string $position = ''): void
     {
         $fieldName = self::DIV_MARKER . ';' . $this->getLabel($label);
         PositionHelper::addFieldToPosition($this->fields, $fieldName, $position);
     }
 
-    public function removeDivByLabel(string $label)
+    public function removeDivByLabel(string $label): void
     {
         StringHelper::removeStringInList($this->fields, $this->getDivByLabel($label));
     }
 
-    public function removeDivByPosition(int $position)
+    public function removeDivByPosition(int $position): void
     {
         StringHelper::removeStringInList($this->fields, $this->getDivByPosition($position));
     }
@@ -175,12 +175,12 @@ class ConcreteBuilder
         return self::DIV_MARKER . ';' . $this->getLabel($label);
     }
 
-    public function addColumnsOverrides(string $fieldName, array $override)
+    public function addColumnsOverrides(string $fieldName, array $override): void
     {
         $this->columnsOverrides[$fieldName] = $override;
     }
 
-    public function addCustomPalette(string $paletteId, array $showItems, string $label = '', string $position = '')
+    public function addCustomPalette(string $paletteId, array $showItems, string $label = '', string $position = ''): void
     {
         $this->customPalettes[$paletteId] = [
             'label' => $label,
@@ -192,12 +192,12 @@ class ConcreteBuilder
         }
     }
 
-    public function setFieldsForPalette(string $paletteId, array $fields)
+    public function setFieldsForPalette(string $paletteId, array $fields): void
     {
         $this->customPalettes[$paletteId][self::SHOWITEM_KEYWORD] = implode(',', $fields);
     }
 
-    public function load()
+    public function load(): void
     {
         $loadedFields = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType][self::SHOWITEM_KEYWORD] ?? '';
 
@@ -205,7 +205,7 @@ class ConcreteBuilder
         $this->columnsOverrides = $GLOBALS['TCA'][$this->table][self::TYPES_KEYWORD][$this->selectedType]['columnsOverrides'] ?? null;
     }
 
-    public function save(bool $resetAfterSave = true)
+    public function save(bool $resetAfterSave = true): void
     {
         if ($this->table === '' && $this->selectedType === '') {
             return;
@@ -239,7 +239,7 @@ class ConcreteBuilder
         return $typeConfiguration;
     }
 
-    public function useLocalLangFile(string $filePath)
+    public function useLocalLangFile(string $filePath): void
     {
         $this->locallangFile = $filePath;
     }

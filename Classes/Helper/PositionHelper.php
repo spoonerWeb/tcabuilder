@@ -18,7 +18,7 @@ use SpoonerWeb\TcaBuilder\Builder\ConcreteBuilder;
 
 class PositionHelper
 {
-    public static function addFieldToPosition(array &$fields, string $fieldName, string $position = '')
+    public static function addFieldToPosition(array &$fields, string $fieldName, string $position = ''): void
     {
         if ($position === '') {
             $fields[] = $fieldName;
