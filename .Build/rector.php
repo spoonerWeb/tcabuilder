@@ -43,6 +43,7 @@ return RectorConfig::configure()
         getcwd() . '/**/Configuration/ExtensionBuilder/*',
         getcwd() . '/.Build/*',
         getcwd() . '/vendor/*',
+        getcwd() . '/public/*',
         NameImportingPostRector::class => [
             'ext_localconf.php',
             'ext_tables.php',
