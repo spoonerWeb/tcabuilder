@@ -42,6 +42,7 @@ return RectorConfig::configure()
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
         getcwd() . '/**/Configuration/ExtensionBuilder/*',
         getcwd() . '/.Build/*',
+        getcwd() . '/vendor/*',
         NameImportingPostRector::class => [
             'ext_localconf.php',
             'ext_tables.php',
