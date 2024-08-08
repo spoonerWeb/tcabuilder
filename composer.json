@@ -22,8 +22,8 @@
   ],
   "require": {
     "php": ">= 7.4, < 8.4",
-    "typo3/cms-backend": "^v11.5 || ^v12.4 || ^v13.0",
-    "typo3/cms-core": "^v11.5 || ^v12.4 || ^v13.0"
+    "typo3/cms-backend": "^v11.5 || ^v12.4 || ^v13.2",
+    "typo3/cms-core": "^v11.5 || ^v12.4 || ^v13.2"
   },
   "require-dev": {
     "ssch/typo3-rector": "^2.4",
