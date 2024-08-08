@@ -16,7 +16,7 @@ namespace SpoonerWeb\TcaBuilder\Helper;
 
 class ArrayHelper
 {
-    public static function resetKeys(array &$fields)
+    public static function resetKeys(array &$fields): void
     {
         $fields = array_values($fields);
     }

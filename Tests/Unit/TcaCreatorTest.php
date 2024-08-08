@@ -24,7 +24,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function instanceCanBeCalled()
+    public function instanceCanBeCalled(): void
     {
         self::assertTrue(class_exists(TcaCreator::class));
     }
@@ -32,7 +32,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getControlConfigurationOnlyWithTitleAndLabelReturnsFullControlConfigurationAsArray()
+    public function getControlConfigurationOnlyWithTitleAndLabelReturnsFullControlConfigurationAsArray(): void
     {
         $configuration = TcaCreator::getControlConfiguration(
             'title',
@@ -57,7 +57,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getControlConfigurationWithoutAllAdditionsReturnsControlConfigurationAsArray()
+    public function getControlConfigurationWithoutAllAdditionsReturnsControlConfigurationAsArray(): void
     {
         $configuration = TcaCreator::getControlConfiguration(
             'title',
@@ -83,7 +83,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getControlConfigurationWithLanguageFieldsReturnsControlConfigurationAsArray()
+    public function getControlConfigurationWithLanguageFieldsReturnsControlConfigurationAsArray(): void
     {
         $configuration = TcaCreator::getControlConfiguration(
             'title',
@@ -110,7 +110,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getControlConfigurationWithVersionFieldsReturnsControlConfigurationAsArray()
+    public function getControlConfigurationWithVersionFieldsReturnsControlConfigurationAsArray(): void
     {
         $configuration = TcaCreator::getControlConfiguration(
             'title',
@@ -137,7 +137,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getControlConfigurationWithSortingFieldsReturnsControlConfigurationAsArray()
+    public function getControlConfigurationWithSortingFieldsReturnsControlConfigurationAsArray(): void
     {
         $configuration = TcaCreator::getControlConfiguration(
             'title',
@@ -164,7 +164,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getControlConfigurationWithOverridingFieldReturnsChangedControlConfigurationAsArray()
+    public function getControlConfigurationWithOverridingFieldReturnsChangedControlConfigurationAsArray(): void
     {
         $configuration = TcaCreator::getControlConfiguration(
             'title',
@@ -194,12 +194,18 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getColumnsConfigurationWithCompleteControlConfigurationReturnsFullColumnsArray()
+    public function getColumnsConfigurationWithCompleteControlConfigurationReturnsFullColumnsArray(): void
     {
         $columns = TcaCreator::getColumnsConfiguration(
             TcaCreator::getControlConfiguration('title', 'label'),
             'tx_table'
         );
+
+        $timeColumn = ColumnsTemplates::TIME_TEMPLATE;
+        $starttimeColumn = $timeColumn;
+        $starttimeColumn['label'] = str_replace('###FIELD_NAME###', 'starttime', $starttimeColumn['label']);
+        $endtimeColumn = $timeColumn;
+        $endtimeColumn['label'] = str_replace('###FIELD_NAME###', 'endtime', $endtimeColumn['label']);
 
         self::assertEquals(
             [
@@ -208,6 +214,9 @@ class TcaCreatorTest extends TestCase
                 'l10n_parent' => ColumnsTemplates::getLanguageParentColumnWithReplacedTableName('tx_table'),
                 'l10n_diffsource' => ColumnsTemplates::LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE,
                 'l10n_source' => ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE,
+                'fe_group' => ColumnsTemplates::FE_GROUP_TEMPLATE,
+                'starttime' => $starttimeColumn,
+                'endtime' => $endtimeColumn,
             ],
             $columns
         );
@@ -216,7 +225,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function getColumnsConfigurationWithCompleteControlConfigurationAndAdditionalColumnReturnsFullColumnsArray()
+    public function getColumnsConfigurationWithCompleteControlConfigurationAndAdditionalColumnReturnsFullColumnsArray(): void
     {
         $columns = TcaCreator::getColumnsConfiguration(
             TcaCreator::getControlConfiguration('title', 'label'),
@@ -231,6 +240,12 @@ class TcaCreatorTest extends TestCase
             ]
         );
 
+        $timeColumn = ColumnsTemplates::TIME_TEMPLATE;
+        $starttimeColumn = $timeColumn;
+        $starttimeColumn['label'] = str_replace('###FIELD_NAME###', 'starttime', $starttimeColumn['label']);
+        $endtimeColumn = $timeColumn;
+        $endtimeColumn['label'] = str_replace('###FIELD_NAME###', 'endtime', $endtimeColumn['label']);
+
         self::assertEquals(
             [
                 'hidden' => ColumnsTemplates::DISABLED_TEMPLATE,
@@ -244,6 +259,9 @@ class TcaCreatorTest extends TestCase
                         'type' => 'input',
                     ],
                 ],
+                'fe_group' => ColumnsTemplates::FE_GROUP_TEMPLATE,
+                'starttime' => $starttimeColumn,
+                'endtime' => $endtimeColumn,
             ],
             $columns
         );
@@ -252,7 +270,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function buildColumnsConfigurationReplacesTableInLanguageParentField()
+    public function buildColumnsConfigurationReplacesTableInLanguageParentField(): void
     {
         $tableName = 'tx_table';
         $columns = TcaCreator::getColumnsConfiguration(
@@ -276,7 +294,7 @@ class TcaCreatorTest extends TestCase
     /**
      * @test
      */
-    public function buildTypesConfigurationReturnsTcaBuilderInstance()
+    public function buildTypesConfigurationReturnsTcaBuilderInstance(): void
     {
         self::assertEquals(
             new TcaBuilder(),

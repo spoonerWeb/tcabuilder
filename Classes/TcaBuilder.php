@@ -397,7 +397,7 @@ class TcaBuilder
      *
      * @param bool $resetAfterSave
      */
-    public function saveToTca(bool $resetAfterSave = true)
+    public function saveToTca(bool $resetAfterSave = true): void
     {
         $this->tcaBuilder->save($resetAfterSave);
     }

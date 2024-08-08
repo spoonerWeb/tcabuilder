@@ -39,7 +39,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function classCanBeInstantiated()
+    public function classCanBeInstantiated(): void
     {
         self::assertInstanceOf(TcaBuilder::class, $this->tcaBuilder);
     }
@@ -47,7 +47,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function saveFieldsWithoutTableAndTypeReturnsNull()
+    public function saveFieldsWithoutTableAndTypeReturnsNull(): void
     {
         $this->tcaBuilder
             ->reset()
@@ -59,7 +59,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function setTableAndTypeAndOneFieldReturnsFieldInTcaArray()
+    public function setTableAndTypeAndOneFieldReturnsFieldInTcaArray(): void
     {
         $table = 'myTable';
         $type = 'myType';
@@ -86,7 +86,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function loadByTableAndTypeAndManipulateFieldReturnsPreFilledButManipulatedStringList()
+    public function loadByTableAndTypeAndManipulateFieldReturnsPreFilledButManipulatedStringList(): void
     {
         $this->tcaBuilder
             ->addField('firstField')
@@ -108,7 +108,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function useLocalLangFileReturnsChangedLabelString()
+    public function useLocalLangFileReturnsChangedLabelString(): void
     {
         $this->tcaBuilder
             ->useLocalLangFile('EXT:my_ext/Resources/Private/Language/locallang.xlf')
@@ -124,7 +124,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeTypeWithoutGivenOrSelectedTypeDoesNothing()
+    public function removeTypeWithoutGivenOrSelectedTypeDoesNothing(): void
     {
         $this->tcaBuilder
             ->setTable('table')
@@ -146,7 +146,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeTypeWithSelectedTypeRemovesType()
+    public function removeTypeWithSelectedTypeRemovesType(): void
     {
         $this->tcaBuilder
             ->setTable('table')
@@ -169,7 +169,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeTypeWithGivenTypeRemovesType()
+    public function removeTypeWithGivenTypeRemovesType(): void
     {
         $this->tcaBuilder
             ->setTable('table')
@@ -191,7 +191,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeTypeWithGivenButUnusedTypeRemovesNothing()
+    public function removeTypeWithGivenButUnusedTypeRemovesNothing(): void
     {
         $this->tcaBuilder
             ->setTable('table')
@@ -213,7 +213,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addNoFieldAndSaveDirectlyReturnsEmptyString()
+    public function addNoFieldAndSaveDirectlyReturnsEmptyString(): void
     {
         $this->tcaBuilder
             ->saveToTca();
@@ -224,7 +224,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addFieldWithStringAddsField()
+    public function addFieldWithStringAddsField(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -236,7 +236,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addFieldWithStringAndAlternativeLabelAddsFieldWithLabel()
+    public function addFieldWithStringAndAlternativeLabelAddsFieldWithLabel(): void
     {
         $this->tcaBuilder
             ->addField('newField', '', 'Label')
@@ -248,7 +248,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addFieldWithStringAndColumnsOverridesReturnsConfigurationOfFieldAndColumnsOverrides()
+    public function addFieldWithStringAndColumnsOverridesReturnsConfigurationOfFieldAndColumnsOverrides(): void
     {
         $overridesConfiguration = ['config' => ['type' => 'input']];
         $this->tcaBuilder
@@ -262,7 +262,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoFieldsWithStringsAddsTwoFields()
+    public function addTwoFieldsWithStringsAddsTwoFields(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -275,7 +275,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoFieldsWithStringsAndOneWithPositionAddsTwoCorrectlySortedFields()
+    public function addTwoFieldsWithStringsAndOneWithPositionAddsTwoCorrectlySortedFields(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -288,7 +288,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoFieldsWithStringsAndOneWithNonExistingPositionAddsTwoCorrectlySortedFields()
+    public function addTwoFieldsWithStringsAndOneWithNonExistingPositionAddsTwoCorrectlySortedFields(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -301,7 +301,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreeFieldsWithStringsAndTwoWithPositionAddsThreeCorrectlySortedFields()
+    public function addThreeFieldsWithStringsAndTwoWithPositionAddsThreeCorrectlySortedFields(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -315,7 +315,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoFieldsWithAltLabelReturnsCorrectFieldsWithAltLabels()
+    public function addTwoFieldsWithAltLabelReturnsCorrectFieldsWithAltLabels(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -332,7 +332,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreeFieldsWithAltLabelReturnsCorrectFieldsWithAltLabels()
+    public function addThreeFieldsWithAltLabelReturnsCorrectFieldsWithAltLabels(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -350,7 +350,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeFieldWithStringRemovesField()
+    public function removeFieldWithStringRemovesField(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -363,7 +363,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeFieldWithNonExistingStringRemovesNoField()
+    public function removeFieldWithNonExistingStringRemovesNoField(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -376,7 +376,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function moveFieldWithStringAndPositionReturnsFieldListInCorrectOrder()
+    public function moveFieldWithStringAndPositionReturnsFieldListInCorrectOrder(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -391,7 +391,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function moveFieldWithStringAndPositionWithLabelReturnsFieldListInCorrectOrder()
+    public function moveFieldWithStringAndPositionWithLabelReturnsFieldListInCorrectOrder(): void
     {
         $this->tcaBuilder
             ->addField('newField;Label')
@@ -406,7 +406,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function replaceFieldWithStringAndPositionReturnsFieldListInCorrectOrder()
+    public function replaceFieldWithStringAndPositionReturnsFieldListInCorrectOrder(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -421,7 +421,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function moveFieldWithStringAndPositionAndLabelReturnsFieldListInCorrectOrder()
+    public function moveFieldWithStringAndPositionAndLabelReturnsFieldListInCorrectOrder(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -436,7 +436,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function moveFieldWithStringAndNonExistingPositionReturnsFieldListInOriginalOrder()
+    public function moveFieldWithStringAndNonExistingPositionReturnsFieldListInOriginalOrder(): void
     {
         $this->tcaBuilder
             ->addField('newField')
@@ -451,7 +451,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addPaletteWithStringReturnsPaletteString()
+    public function addPaletteWithStringReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -463,7 +463,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addPaletteWithStringAndAlternativeLabelReturnsPaletteStringWithLabel()
+    public function addPaletteWithStringAndAlternativeLabelReturnsPaletteStringWithLabel(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette', '', 'newLabel')
@@ -475,7 +475,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addPaletteWithLllStringAndAlternativeLabelReturnsPaletteStringWithLabel()
+    public function addPaletteWithLllStringAndAlternativeLabelReturnsPaletteStringWithLabel(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette', '', 'LLL:EXT:myext/Resources/Private/Language/locallang.xlf:newLabel')
@@ -487,7 +487,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoPalettesWithStringsReturnsPaletteString()
+    public function addTwoPalettesWithStringsReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -500,7 +500,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreePalettesWithStringsAndOneWithExactPositionStringReturnsPaletteString()
+    public function addThreePalettesWithStringsAndOneWithExactPositionStringReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -517,7 +517,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreePalettesWithStringsAndMoveOneWithExactPositionStringReturnsPaletteString()
+    public function addThreePalettesWithStringsAndMoveOneWithExactPositionStringReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -534,7 +534,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreePalettesWithStringsAndOneWithExactPositionLllStringReturnsPaletteString()
+    public function addThreePalettesWithStringsAndOneWithExactPositionLllStringReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -551,7 +551,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreePalettesWithStringsAndOneWithPositionStringUsingFunctionReturnsPaletteString()
+    public function addThreePalettesWithStringsAndOneWithPositionStringUsingFunctionReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -568,7 +568,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreePalettesWithStringsAndOneWithPositionLllStringUsingFunctionReturnsPaletteString()
+    public function addThreePalettesWithStringsAndOneWithPositionLllStringUsingFunctionReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -585,7 +585,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addThreePalettesWithStringsAndOneWithLabelAndOneWithPositionStringUsingFunctionReturnsPaletteString()
+    public function addThreePalettesWithStringsAndOneWithLabelAndOneWithPositionStringUsingFunctionReturnsPaletteString(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -602,7 +602,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoPalettesAndRemoveOneReturnsStringWithOnePalette()
+    public function addTwoPalettesAndRemoveOneReturnsStringWithOnePalette(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -619,7 +619,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoPalettesAndRemoveNonExistingOneReturnsStringWithTwoPalettes()
+    public function addTwoPalettesAndRemoveNonExistingOneReturnsStringWithTwoPalettes(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -636,7 +636,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function moveOnePaletteWithExistingPositionReturnsPalettesInCorrectOrder()
+    public function moveOnePaletteWithExistingPositionReturnsPalettesInCorrectOrder(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -654,7 +654,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function moveOnePaletteWithNonExistingPositionReturnsPalettesInCorrectOrder()
+    public function moveOnePaletteWithNonExistingPositionReturnsPalettesInCorrectOrder(): void
     {
         $this->tcaBuilder
             ->addPalette('newPalette')
@@ -672,7 +672,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addDivWithLabelReturnsListWithDiv()
+    public function addDivWithLabelReturnsListWithDiv(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -687,7 +687,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoDivsWithLabelAndPositionReturnsListWithTwoDivs()
+    public function addTwoDivsWithLabelAndPositionReturnsListWithTwoDivs(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -704,7 +704,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoDivsWithLabelAndReplaceOnePositionReturnsListWithTwoDivs()
+    public function addTwoDivsWithLabelAndReplaceOnePositionReturnsListWithTwoDivs(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -721,7 +721,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoDivsWithLabelAndReturnsOneExistingDivByLabelReturnsOneDiv()
+    public function addTwoDivsWithLabelAndReturnsOneExistingDivByLabelReturnsOneDiv(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -738,7 +738,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoDivsWithLabelAndReturnsOneExistingDivByPositionReturnsOneDiv()
+    public function addTwoDivsWithLabelAndReturnsOneExistingDivByPositionReturnsOneDiv(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -755,7 +755,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoDivsWithLabelAndReturnsOneNonExistingDivByLabelReturnsTwoDivs()
+    public function addTwoDivsWithLabelAndReturnsOneNonExistingDivByLabelReturnsTwoDivs(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -772,7 +772,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addTwoDivsWithLabelAndReturnsOneNonExistingDivByPositionReturnsTwoDivs()
+    public function addTwoDivsWithLabelAndReturnsOneNonExistingDivByPositionReturnsTwoDivs(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -789,7 +789,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function getDivStringByLabelReturnsCorrectDivString()
+    public function getDivStringByLabelReturnsCorrectDivString(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -804,7 +804,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function getDivStringByPositionReturnsCorrectDivString()
+    public function getDivStringByPositionReturnsCorrectDivString(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -819,7 +819,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function getDivStringByNonExistingLabelReturnsEmptyString()
+    public function getDivStringByNonExistingLabelReturnsEmptyString(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -834,7 +834,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function getDivStringByNonExistingPositionReturnsEmptyString()
+    public function getDivStringByNonExistingPositionReturnsEmptyString(): void
     {
         $this->tcaBuilder
             ->addDiv('newDiv')
@@ -849,7 +849,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addOverridesReturnsGivenConfigurationInColumnsOverrides()
+    public function addOverridesReturnsGivenConfigurationInColumnsOverrides(): void
     {
         $field = 'field';
         $config = [
@@ -871,7 +871,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addCustomPaletteReturnsCustomPaletteInPalettesConfiguration()
+    public function addCustomPaletteReturnsCustomPaletteInPalettesConfiguration(): void
     {
         $this->tcaBuilder->addCustomPalette(
             'custom',
@@ -892,7 +892,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addCustomPaletteWithPositionReturnsCustomPaletteInPalettesConfigurationAndPaletteInType()
+    public function addCustomPaletteWithPositionReturnsCustomPaletteInPalettesConfigurationAndPaletteInType(): void
     {
         $this->tcaBuilder
             ->addField('field1')
@@ -923,7 +923,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addFieldBeforeFirstFieldReturnsCorrectPosition()
+    public function addFieldBeforeFirstFieldReturnsCorrectPosition(): void
     {
         $this->tcaBuilder
             ->addField('field1')
@@ -939,7 +939,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addFieldToExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    public function addFieldToExistingPaletteReturnsConfigurationWithUpdatedPaletteString(): void
     {
         $this->tcaBuilder
             ->addCustomPalette('custom', ['field1', 'field2'])
@@ -960,7 +960,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function addFieldWithPositionToExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    public function addFieldWithPositionToExistingPaletteReturnsConfigurationWithUpdatedPaletteString(): void
     {
         $this->tcaBuilder
             ->addCustomPalette('custom', ['field1', 'field2'])
@@ -982,16 +982,26 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeFieldOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    public function removeFieldOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString(): void
     {
         $this->tcaBuilder
-            ->addCustomPalette('custom', ['field1', 'field2'])
+            ->addCustomPalette('custom', ["\n  field1", '   field2;Test  ', 'field3'])
             ->addPalette('custom')
             ->removeFieldFromPalette('custom', 'field1')
             ->saveToTca();
 
         self::assertEquals(
-            'field2',
+            '   field2;Test  ,field3',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'type')
+            ->removeFieldFromPalette('custom', 'field2')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field3',
             $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(
@@ -1003,7 +1013,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removeFieldWithLabelOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString()
+    public function removeFieldWithLabelOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString(): void
     {
         $this->tcaBuilder
             ->addCustomPalette('custom', ['field1', 'field2;Test'])
@@ -1024,7 +1034,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function initializeTypeWithEmptyListReturnsEmptyTypeListAndEmptyOverrides()
+    public function initializeTypeWithEmptyListReturnsEmptyTypeListAndEmptyOverrides(): void
     {
         $this->tcaBuilder
             ->addField('field1')
@@ -1045,7 +1055,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function initializeTypeWithEmptyListAndThenNewFieldsReturnsTypeListWithNewAddedFields()
+    public function initializeTypeWithEmptyListAndThenNewFieldsReturnsTypeListWithNewAddedFields(): void
     {
         $this->tcaBuilder
             ->addField('field1')
@@ -1068,7 +1078,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function initializePaletteWithEmptyListReturnsEmptyPaletteList()
+    public function initializePaletteWithEmptyListReturnsEmptyPaletteList(): void
     {
         $this->tcaBuilder
             ->addCustomPalette('palette', ['field1', 'field2'])
@@ -1089,7 +1099,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function copyFromExistingTypeToNewTypeReturnsSameList()
+    public function copyFromExistingTypeToNewTypeReturnsSameList(): void
     {
         $this->tcaBuilder
             ->addField('field3')
@@ -1110,7 +1120,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function copyFromExistingTypeAndAddingNewFieldReturnsChangedList()
+    public function copyFromExistingTypeAndAddingNewFieldReturnsChangedList(): void
     {
         $this->tcaBuilder
             ->addField('field3')
@@ -1132,7 +1142,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function copyFromExistingTypeAndRemovingFieldReturnsChangedList()
+    public function copyFromExistingTypeAndRemovingFieldReturnsChangedList(): void
     {
         $this->tcaBuilder
             ->addField('field3')
@@ -1154,7 +1164,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function returnFromArrayReturnsTypeConfigurationAsArray()
+    public function returnFromArrayReturnsTypeConfigurationAsArray(): void
     {
         $override = [
             'config' => [
@@ -1181,7 +1191,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function copyFromTextTypeAndMoveHeaderFieldAndUseAltLabelReturnsCorrectFieldsOrderAndLabels()
+    public function copyFromTextTypeAndMoveHeaderFieldAndUseAltLabelReturnsCorrectFieldsOrderAndLabels(): void
     {
         $GLOBALS['TCA']['table'][ConcreteBuilder::TYPES_KEYWORD]['text'][ConcreteBuilder::SHOWITEM_KEYWORD] = '--palette--;;general,--palette--;;headers,bodytext';
 
@@ -1209,7 +1219,7 @@ class TcaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function removalOfCorrectField()
+    public function removalOfCorrectField(): void
     {
         $this->tcaBuilder
             ->loadConfiguration('table', 'removal')

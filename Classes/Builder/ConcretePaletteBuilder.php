@@ -25,7 +25,7 @@ class ConcretePaletteBuilder
 
     protected $paletteFields = [];
 
-    public function load(string $paletteId, string $table)
+    public function load(string $paletteId, string $table): void
     {
         $this->reset();
         $this->paletteId = $paletteId;
@@ -33,14 +33,14 @@ class ConcretePaletteBuilder
         $this->paletteFields = explode(',', $GLOBALS['TCA'][$table]['palettes'][$paletteId]['showitem']);
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->paletteId = '';
         $this->table = '';
         $this->paletteFields = [];
     }
 
-    public function saveToTca()
+    public function saveToTca(): void
     {
         $GLOBALS['TCA'][$this->table]['palettes'][$this->paletteId]['showitem'] = implode(
             ',',
@@ -49,12 +49,12 @@ class ConcretePaletteBuilder
         $this->reset();
     }
 
-    public function addField(string $fieldName, string $position = '')
+    public function addField(string $fieldName, string $position = ''): void
     {
         PositionHelper::addFieldToPosition($this->paletteFields, $fieldName, $position);
     }
 
-    public function removeField(string $fieldName)
+    public function removeField(string $fieldName): void
     {
         StringHelper::removeStringInList($this->paletteFields, $fieldName);
     }

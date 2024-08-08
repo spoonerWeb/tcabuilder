@@ -89,6 +89,22 @@ class TcaCreator
             $columns[$controlConfiguration['translationSource']] = ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE;
         }
 
+        if ($controlConfiguration['enablecolumns']['fe_group'] ?? false) {
+            $columns[$controlConfiguration['enablecolumns']['fe_group']] = ColumnsTemplates::FE_GROUP_TEMPLATE;
+        }
+
+        foreach (['starttime', 'endtime'] as $fieldName) {
+            if ($controlConfiguration['enablecolumns'][$fieldName] ?? false) {
+                $column = ColumnsTemplates::TIME_TEMPLATE;
+                $column['label'] = str_replace(
+                    '###FIELD_NAME###',
+                    $fieldName,
+                    $column['label']
+                );
+                $columns[$controlConfiguration['enablecolumns'][$fieldName]] = $column;
+            }
+        }
+
         if ($additionalColumns) {
             $columns = array_merge($columns, $additionalColumns);
         }
