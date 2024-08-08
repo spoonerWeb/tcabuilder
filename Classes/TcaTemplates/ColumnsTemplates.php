@@ -25,6 +25,45 @@ class ColumnsTemplates
         ],
     ];
 
+    public const TIME_TEMPLATE = [
+        'exclude' => true,
+        'l10n_display' => 'defaultAsReadonly',
+        'l10n_mode' => 'exclude',
+        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.###FIELD_NAME###',
+        'config' => [
+            'type' => 'input',
+            'renderType' => 'inputDateTime',
+            'eval' => 'datetime',
+            'default' => 0,
+        ],
+    ];
+
+    public const FE_GROUP_TEMPLATE = [
+        'exclude' => true,
+        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.fe_group',
+        'config' => [
+            'type' => 'select',
+            'size' => 5,
+            'maxitems' => 20,
+            'exclusiveKeys' => '-1,-2',
+            'foreign_table' => 'fe_groups',
+            'items' => [
+                [
+                    'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
+                    'value' => -1,
+                ],
+                [
+                    'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
+                    'value' => -2,
+                ],
+                [
+                    'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
+                    'value' => '--div--',
+                ],
+            ],
+        ],
+    ];
+
     public const LANGUAGE_FIELD_TEMPLATE = [
         'exclude' => true,
         'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',

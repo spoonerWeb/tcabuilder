@@ -201,6 +201,12 @@ class TcaCreatorTest extends TestCase
             'tx_table'
         );
 
+        $timeColumn = ColumnsTemplates::TIME_TEMPLATE;
+        $starttimeColumn = $timeColumn;
+        $starttimeColumn['label'] = str_replace('###FIELD_NAME###', 'starttime', $starttimeColumn['label']);
+        $endtimeColumn = $timeColumn;
+        $endtimeColumn['label'] = str_replace('###FIELD_NAME###', 'endtime', $endtimeColumn['label']);
+
         self::assertEquals(
             [
                 'hidden' => ColumnsTemplates::DISABLED_TEMPLATE,
@@ -208,6 +214,9 @@ class TcaCreatorTest extends TestCase
                 'l10n_parent' => ColumnsTemplates::getLanguageParentColumnWithReplacedTableName('tx_table'),
                 'l10n_diffsource' => ColumnsTemplates::LANGUAGE_DIFFSOURCE_FIELD_TEMPLATE,
                 'l10n_source' => ColumnsTemplates::LANGUAGE_SOURCE_FIELD_TEMPLATE,
+                'fe_group' => ColumnsTemplates::FE_GROUP_TEMPLATE,
+                'starttime' => $starttimeColumn,
+                'endtime' => $endtimeColumn,
             ],
             $columns
         );
@@ -231,6 +240,12 @@ class TcaCreatorTest extends TestCase
             ]
         );
 
+        $timeColumn = ColumnsTemplates::TIME_TEMPLATE;
+        $starttimeColumn = $timeColumn;
+        $starttimeColumn['label'] = str_replace('###FIELD_NAME###', 'starttime', $starttimeColumn['label']);
+        $endtimeColumn = $timeColumn;
+        $endtimeColumn['label'] = str_replace('###FIELD_NAME###', 'endtime', $endtimeColumn['label']);
+
         self::assertEquals(
             [
                 'hidden' => ColumnsTemplates::DISABLED_TEMPLATE,
@@ -244,6 +259,9 @@ class TcaCreatorTest extends TestCase
                         'type' => 'input',
                     ],
                 ],
+                'fe_group' => ColumnsTemplates::FE_GROUP_TEMPLATE,
+                'starttime' => $starttimeColumn,
+                'endtime' => $endtimeColumn,
             ],
             $columns
         );

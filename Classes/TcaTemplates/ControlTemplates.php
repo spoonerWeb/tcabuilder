@@ -23,6 +23,9 @@ class ControlTemplates
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+            'fe_group' => 'fe_group',
         ],
     ];
 
