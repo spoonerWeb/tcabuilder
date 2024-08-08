@@ -985,13 +985,23 @@ class TcaBuilderTest extends TestCase
     public function removeFieldOfExistingPaletteReturnsConfigurationWithUpdatedPaletteString(): void
     {
         $this->tcaBuilder
-            ->addCustomPalette('custom', ['field1', 'field2'])
+            ->addCustomPalette('custom', ["\n  field1", '   field2;Test  ', 'field3'])
             ->addPalette('custom')
             ->removeFieldFromPalette('custom', 'field1')
             ->saveToTca();
 
         self::assertEquals(
-            'field2',
+            '   field2;Test  ,field3',
+            $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
+        );
+
+        $this->tcaBuilder
+            ->loadConfiguration('table', 'type')
+            ->removeFieldFromPalette('custom', 'field2')
+            ->saveToTca();
+
+        self::assertEquals(
+            'field3',
             $GLOBALS['TCA']['table'][ConcreteBuilder::PALETTES_KEYWORD]['custom'][ConcreteBuilder::SHOWITEM_KEYWORD]
         );
         self::assertEquals(

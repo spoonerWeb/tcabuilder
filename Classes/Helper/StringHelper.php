@@ -55,7 +55,7 @@ class StringHelper
 
     public static function findFieldVariantInList(string $fieldName, array $fields): ?int
     {
-        $pattern = '/' . preg_quote($fieldName, '/') . '(;\w+)?$/';
+        $pattern = '/(\s+)?' . preg_quote($fieldName, '/') . '(;.*)?(\s+)?$/';
         $matches = preg_grep($pattern, $fields);
 
         return array_key_first($matches);
