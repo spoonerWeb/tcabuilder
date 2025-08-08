@@ -76,7 +76,7 @@ stages:
   <<: *lint_tests
   parallel:
     matrix:
-      - PHP_VERSION: ["7.4", "8.0", "8.1", "8.2", "8.3"]
+      - PHP_VERSION: ["7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
 
 .unit_tests: &unit_tests
   stage: test
@@ -103,7 +103,7 @@ stages:
   <<: *unit_tests
   parallel:
     matrix:
-      - PHP_VERSION: [ "8.1", "8.2", "8.3" ]
+      - PHP_VERSION: [ "8.1", "8.2", "8.3", "8.4"]
 
 "Upload to TER":
   stage: release
