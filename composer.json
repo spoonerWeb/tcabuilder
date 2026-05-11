@@ -23,6 +23,7 @@
   "require": {
     "php": ">= 8.2, < 8.6",
     "typo3/cms-backend": "^v11.5 || ^v12.4 || ^v13.4 || ^14.3",
+    "typo3/cms-frontend": "^v11.5 || ^v12.4 || ^v13.4 || ^14.3",
     "typo3/cms-core": "^v11.5 || ^v12.4 || ^v13.4 || ^14.3"
   },
   "require-dev": {
