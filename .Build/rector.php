@@ -22,7 +22,7 @@ return RectorConfig::configure()
     ->withSets([
         Typo3SetList::CODE_QUALITY,
         Typo3SetList::GENERAL,
-        Typo3LevelSetList::UP_TO_TYPO3_13,
+        Typo3LevelSetList::UP_TO_TYPO3_14,
     ])
     # To have a better analysis from PHPStan, we teach it here some more things
     ->withPHPStanConfigs([
@@ -33,8 +33,8 @@ return RectorConfig::configure()
         ConvertImplicitVariablesToExplicitGlobalsRector::class,
     ])
     ->withConfiguredRule(ExtEmConfRector::class, [
-        ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.0.0 - 8.3.99',
-        ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '11.5.0 - 13.9.99',
+        ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.2.0 - 8.5.99',
+        ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '11.5.0 - 14.3.99',
         ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => []
     ])
     # If you use importNames(), you should consider excluding some TYPO3 files.
