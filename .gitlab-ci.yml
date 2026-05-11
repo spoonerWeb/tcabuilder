@@ -34,6 +34,7 @@ stages:
     - composer config --no-interaction allow-plugins.typo3/cms-composer-installers true
     - composer global require phpstan/phpstan
   script:
+    - composer dump
     - composer install --ignore-platform-reqs
     - /tmp/vendor/bin/phpstan analyse -l 4 -c .Build/phpstan.neon
   only:
@@ -48,6 +49,7 @@ stages:
     - composer config --no-interaction allow-plugins.composer/installers true
     - composer config --no-interaction allow-plugins.typo3/class-alias-loader true
     - composer config --no-interaction allow-plugins.typo3/cms-composer-installers true
+    - composer dump
     - composer install --ignore-platform-reqs
     - mkdir build
     - apk update && apk add icu-dev
