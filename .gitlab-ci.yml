@@ -10,7 +10,6 @@ cache:
     - vendor/
 
 stages:
-  - lint
   - test
   - packages
   - badges
@@ -24,6 +23,7 @@ stages:
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "PHP Static Analyzer":
   stage: test
@@ -39,6 +39,7 @@ stages:
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "PHP Rector Analyzer":
   stage: test
@@ -56,6 +57,7 @@ stages:
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "Create Badge":
   stage: badges
@@ -64,13 +66,14 @@ stages:
     - anybadge -l "Latest Version" -v $latest_version -f latestVersion.svg -c blue
 
 .lint: &lint_tests
-  stage: lint
+  stage: test
   image: php:$PHP_VERSION
   script:
     - find . -not -path "./vendor/*" -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "Linting with PHP $PHP_VERSION":
   <<: *lint_tests
@@ -98,6 +101,7 @@ stages:
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "Unit Tests with PHP $PHP_VERSION":
   <<: *unit_tests
