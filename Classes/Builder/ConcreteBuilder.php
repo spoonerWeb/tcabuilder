@@ -131,7 +131,7 @@ class ConcreteBuilder
     {
         $allPalettes = array_filter($this->fields, $this->beginsWithPalette(...));
         foreach ($allPalettes as $palette) {
-            if (strpos((string) $palette, $paletteName) > 0) {
+            if (strpos((string)$palette, $paletteName) > 0) {
                 return $palette;
             }
         }
