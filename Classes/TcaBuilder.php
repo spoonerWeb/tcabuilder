@@ -40,7 +40,7 @@ class TcaBuilder
     /**
      * Resets all fields
      *
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function reset(): TcaBuilder
     {
@@ -53,7 +53,7 @@ class TcaBuilder
      * Sets the table to configure
      *
      * @param string $table
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function setTable(string $table): TcaBuilder
     {
@@ -66,7 +66,7 @@ class TcaBuilder
      * Sets the type to configure
      *
      * @param string $type
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function setType(string $type): TcaBuilder
     {
@@ -79,7 +79,7 @@ class TcaBuilder
      * Removes a given or selected type
      *
      * @param string $type
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function removeType(string $type = ''): TcaBuilder
     {
@@ -93,7 +93,7 @@ class TcaBuilder
      * whenever using a label (label must begin with 'LANG:')
      *
      * @param string $localLangFile
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function useLocalLangFile(string $localLangFile)
     {
@@ -109,7 +109,7 @@ class TcaBuilder
      * @param string $position
      * @param string $altLabel
      * @param array $columnsOverrides
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function addField(string $fieldName, string $position = '', string $altLabel = '', array $columnsOverrides = []): TcaBuilder
     {
@@ -137,7 +137,7 @@ class TcaBuilder
      * Removes an existing field
      *
      * @param string $fieldName
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function removeField(string $fieldName): TcaBuilder
     {
@@ -150,7 +150,7 @@ class TcaBuilder
      * @param string $fieldName
      * @param string $newPosition
      * @param string $newLabel
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function moveField(string $fieldName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
@@ -168,7 +168,7 @@ class TcaBuilder
      * @param string $paletteName
      * @param string $position
      * @param string $altLabel
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function addPalette(string $paletteName, string $position = '', string $altLabel = ''): TcaBuilder
     {
@@ -181,7 +181,7 @@ class TcaBuilder
      * Removes a palette by name
      *
      * @param string $paletteName
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function removePalette(string $paletteName): TcaBuilder
     {
@@ -194,7 +194,7 @@ class TcaBuilder
      * @param string $paletteName
      * @param string $newPosition
      * @param string $newLabel
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function movePalette(string $paletteName, string $newPosition, string $newLabel = ''): TcaBuilder
     {
@@ -222,7 +222,7 @@ class TcaBuilder
      *
      * @param string $divName
      * @param string $position
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function addDiv(string $divName, string $position = ''): TcaBuilder
     {
@@ -235,7 +235,7 @@ class TcaBuilder
      * Removes a div by either position (integer offset) or label
      *
      * @param $identifier
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function removeDiv($identifier): TcaBuilder
     {
@@ -271,7 +271,7 @@ class TcaBuilder
      *
      * @param string $fieldName
      * @param array $override
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function addOverride(string $fieldName, array $override): TcaBuilder
     {
@@ -287,7 +287,7 @@ class TcaBuilder
      * @param array $showItems
      * @param string $label
      * @param string $position
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function addCustomPalette(string $paletteId, array $showItems, string $label = '', string $position = ''): TcaBuilder
     {
@@ -300,7 +300,7 @@ class TcaBuilder
      * @param string $paletteId
      * @param string $field
      * @param string $position
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function addFieldToPalette(string $paletteId, string $field, string $position = ''): TcaBuilder
     {
@@ -317,7 +317,7 @@ class TcaBuilder
     /**
      * @param string $paletteId
      * @param string $field
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function removeFieldFromPalette(string $paletteId, string $field): TcaBuilder
     {
@@ -332,7 +332,7 @@ class TcaBuilder
     }
 
     /**
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function initialize(): TcaBuilder
     {
@@ -343,7 +343,7 @@ class TcaBuilder
 
     /**
      * @param string $paletteId
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function initializePalette(string $paletteId): TcaBuilder
     {
@@ -354,7 +354,7 @@ class TcaBuilder
 
     /**
      * @param string $type
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function copyFromType(string $type): TcaBuilder
     {
@@ -366,7 +366,7 @@ class TcaBuilder
     /**
      * Loads the TCA fields from table and types
      *
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function load(): TcaBuilder
     {
@@ -380,7 +380,7 @@ class TcaBuilder
      *
      * @param string $table
      * @param string $type
-     * @return \SpoonerWeb\TcaBuilder\TcaBuilder
+     * @return TcaBuilder
      */
     public function loadConfiguration(string $table, string $type): TcaBuilder
     {

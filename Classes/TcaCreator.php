@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace SpoonerWeb\TcaBuilder;
 
 /*
@@ -56,7 +59,7 @@ class TcaCreator
             );
         }
 
-        if (!empty($additionalConfiguration)) {
+        if ($additionalConfiguration !== []) {
             $configuration = array_merge($configuration, $additionalConfiguration);
         }
 
@@ -105,7 +108,7 @@ class TcaCreator
             }
         }
 
-        if ($additionalColumns) {
+        if ($additionalColumns !== []) {
             $columns = array_merge($columns, $additionalColumns);
         }
 
