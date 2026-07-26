@@ -19,6 +19,7 @@ return RectorConfig::configure()
     ->withPaths([
         getcwd(),
     ])
+
     // uncomment to reach your current PHP version
     // ->withPhpSets()
     ->withPhpVersion(PhpVersion::PHP_84)
@@ -52,6 +53,8 @@ return RectorConfig::configure()
     ->withSkip([
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
         __DIR__ . '/**/Configuration/ExtensionBuilder/*',
+        __DIR__ . '/vendor',
+        __DIR__ . '/.Build',
         NameImportingPostRector::class => [
             'ClassAliasMap.php',
         ]
