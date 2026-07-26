@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TCA Builder - create and change TCA in an easy way',
     'description' => 'Utility to easily maintain and create your TCA forms',

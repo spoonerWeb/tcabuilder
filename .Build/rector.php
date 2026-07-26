@@ -52,9 +52,7 @@ return RectorConfig::configure()
     )
     ->withSkip([
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
-        __DIR__ . '/**/Configuration/ExtensionBuilder/*',
-        __DIR__ . '/vendor',
-        __DIR__ . '/.Build',
+        __DIR__ . '/../ext_emconf.php',
         NameImportingPostRector::class => [
             'ClassAliasMap.php',
         ]
