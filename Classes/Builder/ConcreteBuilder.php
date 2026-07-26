@@ -129,11 +129,9 @@ class ConcreteBuilder
 
     public function getPaletteFieldName(string $paletteName): string
     {
-        $allPalettes = array_filter($this->fields, function ($value): bool {
-            return $this->beginsWithPalette($value);
-        });
+        $allPalettes = array_filter($this->fields, $this->beginsWithPalette(...));
         foreach ($allPalettes as $palette) {
-            if (strpos($palette, $paletteName) > 0) {
+            if (strpos((string)$palette, $paletteName) > 0) {
                 return $palette;
             }
         }
@@ -159,9 +157,7 @@ class ConcreteBuilder
 
     public function getDivByPosition(int $position): string
     {
-        $allDivs = array_values(array_filter($this->fields, function ($value): bool {
-            return $this->beginsWithDiv($value);
-        }));
+        $allDivs = array_values(array_filter($this->fields, $this->beginsWithDiv(...)));
 
         return $allDivs[$position] ?? '';
     }
@@ -250,7 +246,7 @@ class ConcreteBuilder
         foreach ($this->fields as $field) {
             $fieldsWithoutLabel[] = StringHelper::removeLabelFromFieldName($field);
         }
-        return array_search($fieldName, $fieldsWithoutLabel, true) !== false;
+        return in_array($fieldName, $fieldsWithoutLabel, true);
     }
 
     protected function beginsWithDiv($value): bool

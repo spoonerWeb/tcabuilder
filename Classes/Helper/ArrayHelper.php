@@ -23,8 +23,8 @@ class ArrayHelper
 
     public static function trimExplode(string $delim, ?string $string): array
     {
-        $result = explode($delim, $string);
+        $result = explode($delim, (string)$string);
 
-        return array_map('trim', $result);
+        return array_map(trim(...), $result);
     }
 }

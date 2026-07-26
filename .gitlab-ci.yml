@@ -10,7 +10,6 @@ cache:
     - vendor/
 
 stages:
-  - lint
   - test
   - packages
   - badges
@@ -24,6 +23,7 @@ stages:
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "PHP Static Analyzer":
   stage: test
@@ -34,28 +34,30 @@ stages:
     - composer config --no-interaction allow-plugins.typo3/cms-composer-installers true
     - composer global require phpstan/phpstan
   script:
+    - composer dump
     - composer install --ignore-platform-reqs
     - /tmp/vendor/bin/phpstan analyse -l 4 -c .Build/phpstan.neon
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "PHP Rector Analyzer":
   stage: test
   image: composer:2
   before_script:
+    - apk update && apk add icu-dev
+    - docker-php-ext-install intl
     - composer config --no-interaction allow-plugins.composer/installers true
     - composer config --no-interaction allow-plugins.typo3/class-alias-loader true
     - composer config --no-interaction allow-plugins.typo3/cms-composer-installers true
-    - composer install --ignore-platform-reqs
-    - mkdir build
-    - apk update && apk add icu-dev
-    - docker-php-ext-install intl
+    - composer global require ssch/typo3-rector:^3.14
   script:
-    - vendor/bin/rector process --config .Build/rector.php -n
+    - /tmp/vendor/bin/rector process --config .Build/rector.php -n
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "Create Badge":
   stage: badges
@@ -64,19 +66,20 @@ stages:
     - anybadge -l "Latest Version" -v $latest_version -f latestVersion.svg -c blue
 
 .lint: &lint_tests
-  stage: lint
+  stage: test
   image: php:$PHP_VERSION
   script:
     - find . -not -path "./vendor/*" -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "Linting with PHP $PHP_VERSION":
   <<: *lint_tests
   parallel:
     matrix:
-      - PHP_VERSION: ["7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
+      - PHP_VERSION: ["8.2", "8.3", "8.4", "8.5"]
 
 .unit_tests: &unit_tests
   stage: test
@@ -98,12 +101,13 @@ stages:
   only:
     changes:
       - "**/*.php"
+      - ".gitlab-ci.yml"
 
 "Unit Tests with PHP $PHP_VERSION":
   <<: *unit_tests
   parallel:
     matrix:
-      - PHP_VERSION: [ "8.1", "8.2", "8.3", "8.4"]
+      - PHP_VERSION: [ "8.2", "8.3", "8.4", "8.5" ]
 
 "Upload to TER":
   stage: release
