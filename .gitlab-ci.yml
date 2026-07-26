@@ -46,16 +46,14 @@ stages:
   stage: test
   image: composer:2
   before_script:
+    - apk update && apk add icu-dev
+    - docker-php-ext-install intl
     - composer config --no-interaction allow-plugins.composer/installers true
     - composer config --no-interaction allow-plugins.typo3/class-alias-loader true
     - composer config --no-interaction allow-plugins.typo3/cms-composer-installers true
-    - composer dump
-    - composer install --ignore-platform-reqs
-    - mkdir build
-    - apk update && apk add icu-dev
-    - docker-php-ext-install intl
+    - composer global require ssch/typo3-rector:^3.14
   script:
-    - vendor/bin/rector process --config .Build/rector.php -n
+    - /tmp/vendor/bin/rector process --config .Build/rector.php -n
   only:
     changes:
       - "**/*.php"
